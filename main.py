@@ -1,16 +1,17 @@
-from obstacles_2 import*
-from draw_field import*
+from field import *
+from constants import *
 
-
-FPS = 30
+num_field = NumberField(NUMBER_OF_HORIZONTAL_BLOCKS, NUMBER_OF_VERTICAL_BLOCKS,
+                        NUMBER_OF_OBSTACLES, OBSTACLES_LENGTH_MAXIMUM)
+num_field.create_vertical_borders()
+num_field.create_horizontal_borders()
+num_field.create_obstacles()
 
 pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+field = Field(screen, num_field)
+field.draw_field()
 
-screen = pygame.display.set_mode((field_width, field_height))
-make_field()
-draw_field(screen)
-
-pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
@@ -19,7 +20,6 @@ while not finished:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             finished = True
+    pygame.display.update()
 
 pygame.quit()
-
-
