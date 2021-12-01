@@ -19,7 +19,7 @@ class NumberField:
         self.NUMBER_OF_OBSTACLES = number_of_obstacles
         self.OBSTACLES_LENGTH = obstacles_length_max
 
-        self.blocks = [[0] * self.NUMBER_OF_HORIZONTAL_BLOCKS for block in range(self.NUMBER_OF_VERTICAL_BLOCKS)]
+        self.blocks = [[0] * self.NUMBER_OF_HORIZONTAL_BLOCKS for i in range(self.NUMBER_OF_VERTICAL_BLOCKS)]
 
     def create_vertical_borders(self):
         for i in range(self.NUMBER_OF_VERTICAL_BLOCKS):
