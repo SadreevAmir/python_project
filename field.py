@@ -59,7 +59,7 @@ class Field:
         pygame.draw.rect(self.SCREEN, WHITE, [x, y, self.BLOCK_SIZE, self.BLOCK_SIZE])
 
     def draw_field(self):
-        for y in range(NUMBER_OF_VERTICAL_BLOCKS):
-            for x in range(NUMBER_OF_HORIZONTAL_BLOCKS):
+        for y in range(len(self.number_field.blocks)):
+            for x in range(len(self.number_field.blocks[y])):
                 if self.number_field.blocks[y][x]:
                     self.draw_block(x*BLOCK_SIZE, y*BLOCK_SIZE)
