@@ -1,13 +1,14 @@
 from field import *
 from constants import *
-from hero import*
-from platforms import*
+from hero import *
+from platforms import *
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen.fill([55, 255, 255])
 all_sprites = pygame.sprite.Group()
-hero = Hero(HERO_X, HERO_Y)
+hero_1 = Hero(HERO_X, HERO_Y)
+hero_2 = Hero(WIDTH - HERO_X, HEIGHT - HERO_Y)
 
 
 num_field = NumberField(NUMBER_OF_HORIZONTAL_BLOCKS, NUMBER_OF_VERTICAL_BLOCKS,
@@ -18,7 +19,7 @@ num_field.create_obstacles()
 
 create_platforms(num_field.blocks)
 
-all_sprites.add(hero)
+all_sprites.add(hero_1, hero_2)
 for obj in platforms:
     all_sprites.add(obj)
 
@@ -35,7 +36,8 @@ while not finished:
         if event.type == pygame.QUIT:
             finished = True
         else:
-            hero.event_checking(event)
+            hero_1.event_checking_hero_1(event)
+            hero_2.event_checking_hero_2(event)
     all_sprites.update(platforms, screen)
     pygame.display.update()
 

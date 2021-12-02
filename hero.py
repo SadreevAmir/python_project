@@ -37,7 +37,7 @@ class Hero(pygame.sprite.Sprite):
             self.Vy = -JUMP_POWER
             self.onGround = False
 
-    def event_checking(self, event):
+    def event_checking_hero_1(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
                 self.left, self.FACING = True, True
@@ -51,6 +51,23 @@ class Hero(pygame.sprite.Sprite):
             elif event.key == pygame.K_d:
                 self.right = False
             elif event.key == pygame.K_w:
+                self.jump = False
+
+
+    def event_checking_hero_2(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                self.left, self.FACING = True, True
+            elif event.key == pygame.K_RIGHT:
+                self.right, self.FACING = True, False
+            elif event.key == pygame.K_UP:
+                self.jump = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                self.left = False
+            elif event.key == pygame.K_RIGHT:
+                self.right = False
+            elif event.key == pygame.K_UP:
                 self.jump = False
 
     def collision_x(self, platforms):
