@@ -55,11 +55,5 @@ class Field:
         self.BLOCK_SIZE = BLOCK_SIZE
         self.number_field = number_field
 
-    def draw_block(self, x, y):
-        pygame.draw.rect(self.SCREEN, WHITE, [x, y, self.BLOCK_SIZE, self.BLOCK_SIZE])
 
-    def draw_field(self):
-        for y in range(len(self.number_field.blocks)):
-            for x in range(len(self.number_field.blocks[y])):
-                if self.number_field.blocks[y][x]:
-                    self.draw_block(x*BLOCK_SIZE, y*BLOCK_SIZE)
+
