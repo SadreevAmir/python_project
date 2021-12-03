@@ -38,28 +38,3 @@ class Sprites:
             self.delay_counter = 0
         else:
             self.delay_counter += 1
-
-'''
-pygame.init()
-
-FPS = 30
-screen = pygame.display.set_mode((600, 600))
-screen.fill([55, 255, 255])
-
-obj = Sprites('s_plyr_run_strip8.png', screen)
-
-#obj.get_sprite(numbers)
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-
-while not finished:
-    clock.tick(FPS)
-    screen.fill([55, 255, 255])
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-    obj.animation(100, 0, True)
-    pygame.display.update()
-
-pygame.quit()'''
