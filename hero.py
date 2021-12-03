@@ -1,7 +1,7 @@
-import pygame
 from get_sprites import Sprites
 from field import *
 from constants import *
+
 
 class Hero(pygame.sprite.Sprite):
     def __init__(self, start_x, start_y, hero_size=(HERO_SiZE_X, HERO_SIZE_Y)):
@@ -13,13 +13,14 @@ class Hero(pygame.sprite.Sprite):
         self.jump_sprite = Sprites('s_plyr_jump_strip7.png')
         self.rect = self.image.get_rect()
         self.rect.center = (start_x, start_y)
-        self.onGround = True
+        self.onGround = False
         self.left, self.right, self.jump, self.FACING = False, False, False, False
         self.Vx = 0
         self.Vy = 0
 
     def update(self, platforms, screen):
         self.event_handling()
+        self.onGround = False
         self.movement(platforms)
         if (self.right or self.left) and (not self.right or not self.left):
             self.image = pygame.transform.scale(self.run_sprite.get_sprite(self.FACING), self.hero_size)
@@ -53,7 +54,6 @@ class Hero(pygame.sprite.Sprite):
             elif event.key == pygame.K_w:
                 self.jump = False
 
-
     def event_checking_hero_2(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -79,30 +79,20 @@ class Hero(pygame.sprite.Sprite):
 
                 if self.Vx < 0:
                     self.rect.left = p.rect.right
-                
 
     def collision_y(self, platforms):
         for p in platforms:
-
             if pygame.sprite.collide_rect(self, p):
-                if self.Vy >= 0:
+                if self.Vy > 0:
                     self.rect.bottom = p.rect.top
                     self.onGround = True
                     self.Vy = 0
 
-
                 if self.Vy < 0:
                     self.rect.top = p.rect.bottom
-                    self.Vy = -0.01
+                    self.Vy = 0
 
-            if self.jump and self.Vy == 0:
-                self.onGround = True
-            
-            else:
-                self.onGround = False
-
-            
-
+           
     def movement(self, platforms):
         self.rect.x += self.Vx
         self.collision_x(platforms)
@@ -111,9 +101,5 @@ class Hero(pygame.sprite.Sprite):
             self.rect.y += self.Vy
             self.collision_y(platforms)
 
-
     def reset(self):
         self.Vx = 0
-
-
-

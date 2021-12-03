@@ -1,5 +1,6 @@
-from random import randint, choice
+from random import randint, choice, random
 from constants import *
+import random
 import pygame
 
 
@@ -42,6 +43,44 @@ class NumberField:
                 x += a*b
                 y += a*(1-b)
 
+    def create_special_box(self):
+        for i in range(1, NUMBER_OF_VERTICAL_BLOCKS//10):
+            for j in range(1, NUMBER_OF_HORIZONTAL_BLOCKS//5):
+                self.blocks[i][j] = 0
+
+        for i in range(NUMBER_OF_VERTICAL_BLOCKS - NUMBER_OF_VERTICAL_BLOCKS//10, NUMBER_OF_VERTICAL_BLOCKS - 1):
+            for j in range(NUMBER_OF_HORIZONTAL_BLOCKS - NUMBER_OF_HORIZONTAL_BLOCKS//5, NUMBER_OF_HORIZONTAL_BLOCKS - 1):
+                self.blocks[i][j] = 0
+
+    def create_special_tunnel(self, y, x):
+        for i in range(NUMBER_OF_HORIZONTAL_BLOCKS*NUMBER_OF_VERTICAL_BLOCKS):
+            x += random.randint(0, 1)
+            if x >= NUMBER_OF_HORIZONTAL_BLOCKS - 3:
+                x = NUMBER_OF_HORIZONTAL_BLOCKS - 3
+            y += random.randint(0, 1)
+            if y >= NUMBER_OF_VERTICAL_BLOCKS - 3:
+                y = NUMBER_OF_VERTICAL_BLOCKS - 3 
+            self.blocks[y + 1][x] = 0
+            self.blocks[y + 1][x + 1] = 0
+            self.blocks[y + 1][x - 1] = 0
+            self.blocks[y][x] = 0
+            self.blocks[y][x + 1] = 0
+            self.blocks[y][x - 1] = 0
+            self.blocks[y - 1][x] = 0
+            self.blocks[y - 1][x + 1] = 0
+            self.blocks[y - 1][x - 1] = 0
+
+                
+           
+            
+            
+        
+    
+
+
+
+    
+
 
 class Field:
     """
@@ -54,6 +93,21 @@ class Field:
         self.SCREEN = screen
         self.BLOCK_SIZE = BLOCK_SIZE
         self.number_field = number_field
+
+
+num_field = NumberField(NUMBER_OF_HORIZONTAL_BLOCKS, NUMBER_OF_VERTICAL_BLOCKS,
+                        NUMBER_OF_OBSTACLES, OBSTACLES_LENGTH_MAXIMUM)
+
+
+def create_field(num_field):
+    num_field.create_vertical_borders()
+    num_field.create_horizontal_borders()
+    num_field.create_obstacles()
+    num_field.create_special_box()
+    num_field.create_special_tunnel(3, 3)
+
+
+
 
 
 
