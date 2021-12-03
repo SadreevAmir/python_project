@@ -10,9 +10,11 @@ class Platform(pygame.sprite.Sprite):
         self.image = pygame.Surface((a, b))
         self.image.fill([0, 0, 0])
         self.rect = pygame.Rect(x, y, a, b)
+        self.lives = 3
 
-    def update(self, platforms, screen):
+    def update(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+
 
 platforms = []
 
@@ -22,3 +24,4 @@ def create_platforms(number_field):
             if number_field[i][j] != 0:
                 platform = Platform(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
                 platforms.append(platform)
+
