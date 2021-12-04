@@ -29,6 +29,9 @@ main_menu_background = 'menu_back3.png'
 game_background = 'game_back2.png'
 wall_image = 'wall_image.jpg'
 
+w_key_rus = 1094
+a_key_rus = 1092
+d_key_rus = 1074
 
 MOVE_SPEED = 5
 JUMP_POWER = 9
