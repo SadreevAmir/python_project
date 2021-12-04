@@ -40,18 +40,18 @@ class Hero(pygame.sprite.Sprite):
 
     def event_checking_hero_1(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == 1092:
                 self.left, self.FACING = True, True
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d or event.key == 1074:
                 self.right, self.FACING = True, False
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_w or event.key == 1094:
                 self.jump = True
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == 1092:
                 self.left = False
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d or event.key == 1074:
                 self.right = False
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_w or event.key == 1094:
                 self.jump = False
 
     def event_checking_hero_2(self, event):
