@@ -9,7 +9,7 @@ from platforms import *
 def pause(screen):
     paused = True
     clock = pygame.time.Clock()
-    font = pygame.font.Font('Current-Regular.ttf', 36)
+    font = pygame.font.Font(FONT, PAUSE_FONT_SIZE)
     text1 = font.render('paused', True, RED)
     text2 = font.render('tap or press enter to continue', True, RED)
     text3 = font.render('press backspace to quit', True, RED)
@@ -17,8 +17,8 @@ def pause(screen):
     while paused:
         clock.tick(FPS)
         screen.blit(text1, (WIDTH/2 - text1.get_width()/2, HEIGHT/3))
-        screen.blit(text2, (WIDTH/2 - text2.get_width()/2, HEIGHT / 3+80))
-        screen.blit(text3, (WIDTH/2 - text3.get_width()/2, HEIGHT / 3+160))
+        screen.blit(text2, (WIDTH/2 - text2.get_width()/2, HEIGHT*1/2))
+        screen.blit(text3, (WIDTH/2 - text3.get_width()/2, HEIGHT*2/3))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 paused = False

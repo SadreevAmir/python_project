@@ -1,5 +1,5 @@
-NUMBER_OF_HORIZONTAL_BLOCKS = 120
-NUMBER_OF_VERTICAL_BLOCKS = 60
+NUMBER_OF_HORIZONTAL_BLOCKS = 128
+NUMBER_OF_VERTICAL_BLOCKS = 70
 NUMBER_OF_OBSTACLES = 75
 OBSTACLES_LENGTH_MAXIMUM = 150
 
@@ -16,18 +16,18 @@ BLACK = [0, 0, 0]
 WHITE = [250, 250, 250]
 GREEN = [0, 250, 0]
 RED = [190, 0, 0]
-GRAY = [20, 20, 20]
+BLUE = [50, 50, 150]
 DARK_GREEN = [10, 30, 20]
 BROWN = [70, 20, 15]
 PURPLE = [130, 25, 50]
-
 YELLOW = [220, 170, 80]
 
 FONT = 'Current-Regular.ttf'
 SIZE = 54
-main_menu_background = 'menu_back3.png'
+PAUSE_FONT_SIZE = min(WIDTH//30, HEIGHT//19)
+menu_background = 'menu_back/menu_back1.png'
 game_background = 'game_back2.png'
-wall_image = 'wall_image.jpg'
+
 
 w_key_rus = 1094
 a_key_rus = 1092
