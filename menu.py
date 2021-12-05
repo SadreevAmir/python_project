@@ -1,7 +1,8 @@
+import glob
+
 import pygame
 from constants import *
-from game import start_game
-import re
+from game import *
 
 
 class Button:
@@ -39,7 +40,8 @@ class Button:
 class Menu:
     def __init__(self, screen, background_image):
         self.screen = screen
-        background = pygame.image.load(background_image).convert()
+        self.background_image = background_image
+        background = pygame.image.load(self.background_image).convert()
         self.background = pygame.transform.scale(background, self.screen.get_size())
         self.show_flag = True
         self.buttons = []
@@ -73,14 +75,23 @@ class Menu:
             self.press()
             pygame.display.update()
 
+    def change_background(self):
+        files = glob.glob('menu_back/*')
+        pos = files.index(self.background_image)
+        image = files[(pos+1) % len(files)]
+        while not image.lower().endswith(('.png', '.jpg')):
+            pos = (pos + 1) % len(files)
+            image = files[(pos + 1) % len(files)]
+        self.background_image = files[(pos + 1) % len(files)]
+
 
 class MainMenu(Menu):
     def __init__(self, screen, background_image):
         super(MainMenu, self).__init__(screen, background_image)
 
-        self.start_button = Button(self.screen, 'play', YELLOW, PURPLE, start_game)
+        self.start_button = Button(self.screen, 'play', YELLOW, PURPLE, lambda: Game().start_game())
         self.settings_button = Button(self.screen, 'settings', YELLOW, BROWN,
-                                      lambda: SettingsMenu(self.screen, background_image).show())
+                                      lambda: SettingsMenu(self.screen, self.background_image).show())
         self.quit_button = Button(self.screen, 'quit', YELLOW, RED, quit)
 
         self.buttons = [self.start_button, self.settings_button, self.quit_button]
@@ -91,20 +102,10 @@ class SettingsMenu(Menu):
         super(SettingsMenu, self).__init__(screen, background_image)
 
         self.back_button = Button(self.screen, 'back', YELLOW, PURPLE,
-                                  lambda: MainMenu(self.screen, background_image).show())
-        self.change_background = Button(self.screen, 'change background', YELLOW, BLUE, change_background,
-                                        lambda: SettingsMenu(self.screen, menu_background).show())
+                                  lambda: MainMenu(self.screen, self.background_image).show())
+        self.change_background_button = Button(self.screen, 'change background', YELLOW, BLUE,
+                                               lambda: self.change_background(),
+                                               lambda: SettingsMenu(self.screen, self.background_image).show())
 
-        self.buttons = [self.back_button, self.change_background]
-
-
-def change_background():
-    global menu_background
-    num = re.findall('\d+', menu_background)[0]
-    if num.isdigit():
-        pos = menu_background.find(num)
-        num = int(num)
-        chap1 = menu_background[0:pos]
-        chap2 = menu_background[pos+1:len(menu_background)]
-        menu_background = chap1 + str(num % 5+1) + chap2
+        self.buttons = [self.back_button, self.change_background_button]
 

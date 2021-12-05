@@ -1,4 +1,4 @@
-NUMBER_OF_HORIZONTAL_BLOCKS = 128
+NUMBER_OF_HORIZONTAL_BLOCKS = 120
 NUMBER_OF_VERTICAL_BLOCKS = 70
 NUMBER_OF_OBSTACLES = 75
 OBSTACLES_LENGTH_MAXIMUM = 150
@@ -26,7 +26,7 @@ FONT = 'Current-Regular.ttf'
 SIZE = 54
 PAUSE_FONT_SIZE = min(WIDTH//30, HEIGHT//19)
 menu_background = 'menu_back/menu_back1.png'
-game_background = 'game_back2.png'
+game_background = 'game_back/game_back1.png'
 
 
 w_key_rus = 1094
