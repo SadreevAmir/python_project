@@ -27,6 +27,7 @@ class Button:
             size += 10
             if pygame.mouse.get_pressed()[0] == 1:
                 self.pressed = True
+                pygame.time.delay(50)
 
         else:
             color = self.inactive_color
