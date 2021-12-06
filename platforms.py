@@ -8,7 +8,7 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, a, b):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((a, b))
-        self.image.fill([0, 0, 0])
+        self.image.fill([0, 250, 0])
         self.rect = pygame.Rect(x, y, a, b)
         self.lives = 3
 
