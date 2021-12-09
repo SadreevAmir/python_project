@@ -105,4 +105,7 @@ s_pow_back_strip9.png
 - 9 images, 65 x 14 each, back graphic for monsta powerbar
 
 s_pow_bar_strip10.png
-- 10 images, 47 x 13 each, front graphic for monsta powerbar 
+- 10 images, 47 x 13 each, front graphic for monsta powerbar
+
+gun_1.png
+- 1 images, 130 x 50 each
