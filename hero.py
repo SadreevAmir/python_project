@@ -27,7 +27,6 @@ class Hero(pygame.sprite.Sprite):
         self.running = False
         self.attack = False
         self.stun = False
-        self.shot()
         self.lives = 30
 
     def update(self, platforms, characters, screen):
@@ -56,6 +55,7 @@ class Hero(pygame.sprite.Sprite):
             if obj.attack and not (self is obj):
                 if self.rect.colliderect(obj.attack_rect):
                     if not self.stun:
+                        self.stun = True
                         self.lives -= 1
                         if obj.FACING:
                             self.FACING = False
@@ -63,7 +63,6 @@ class Hero(pygame.sprite.Sprite):
                         else:
                             self.FACING = True
                             self.Vx = 10
-                        self.stun = True
 
     def shot(self):
         all_sprites.add(Bullet(self, self.rect.centerx, self.rect.centery))
