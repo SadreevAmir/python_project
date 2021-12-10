@@ -10,8 +10,8 @@ class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.hero_sprites = pygame.sprite.Group()
-        self.hero_1 = Hero(HERO_X, HERO_Y)
-        self.hero_2 = Hero(WIDTH - HERO_X, HEIGHT - HERO_Y)
+        self.hero_1 = Hero1(HERO_X, HERO_Y)
+        self.hero_2 = Hero2(WIDTH - HERO_X, HEIGHT - HERO_Y)
         self.background_image = game_background
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
@@ -74,8 +74,8 @@ class Game:
                     pygame.quit()
                     quit()
                 else:
-                    self.hero_1.event_checking_hero_1(event)
-                    self.hero_2.event_checking_hero_2(event)
+                    self.hero_1.event_checking_hero(event)
+                    self.hero_2.event_checking_hero(event)
             self.hero_sprites.update(platforms, self.screen)
             for p in platforms:
                 p.update(self.screen)
