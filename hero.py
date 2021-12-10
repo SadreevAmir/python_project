@@ -101,9 +101,9 @@ class Hero1(Hero):
 class Hero2(Hero):
     def __init__(self, start_x, start_y):
         super(Hero2, self).__init__(start_x, start_y)
-        self.run_sprite = Sprites(run_sprite)
-        self.stay_sprite = Sprites(stay_sprite)
-        self.jump_sprite = Sprites(jump_sprite)
+        self.run_sprite = Sprites(run_sprite2)
+        self.stay_sprite = Sprites(stay_sprite2)
+        self.jump_sprite = Sprites(jump_sprite2)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:

@@ -2,6 +2,15 @@ Created by Brent Anderson, www.dumbmanex.com
 
 Notes about the Monsta files, for your ease of use.
 
+blue_stay12.png
+- 12 images, 24 x 24 each, staying
+
+blue_run6.png
+- 6 images, 24 x 24 each, running
+
+blue_jump7.png
+- 7 images, 24 x 24 each, jumping
+
 s_health_back.png
 -back graphic for monsta healthbar
 

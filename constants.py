@@ -31,6 +31,9 @@ game_background = 'game_back/game_back1.png'
 run_sprite = 's_plyr_run_strip8.png'
 stay_sprite = 's_plyr_idle1_strip8.png'
 jump_sprite = 's_plyr_jump_strip7.png'
+run_sprite2 = 'blue_run6.png'
+stay_sprite2 = 'blue_stay12.png'
+jump_sprite2 = 'blue_jump7.png'
 
 
 w_key_rus = 1094
