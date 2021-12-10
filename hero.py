@@ -24,6 +24,8 @@ class Hero(pygame.sprite.Sprite):
         self.movement(platforms)
         if (self.right or self.left) and (not self.right or not self.left):
             self.image = pygame.transform.scale(self.run_sprite.get_sprite(self.FACING), self.hero_size)
+        elif self.jump:
+            self.image = pygame.transform.scale(self.jump_sprite.get_sprite(self.FACING), self.hero_size)
         else:
             self.image = pygame.transform.scale(self.stay_sprite.get_sprite(self.FACING), self.hero_size)
         screen.blit(self.image, (self.rect.x, self.rect.y))
