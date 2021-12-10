@@ -8,9 +8,9 @@ class Hero(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface(hero_size)
         self.hero_size = hero_size
-        self.run_sprite = Sprites(run_sprite)
-        self.stay_sprite = Sprites(stay_sprite)
-        self.jump_sprite = Sprites(jump_sprite)
+        self.run_sprite = Sprites(run_sprite1)
+        self.stay_sprite = Sprites(stay_sprite1)
+        self.jump_sprite = Sprites(jump_sprite1)
         self.rect = self.image.get_rect()
         self.rect.center = (start_x, start_y)
         self.onGround = False
@@ -77,9 +77,9 @@ class Hero(pygame.sprite.Sprite):
 class Hero1(Hero):
     def __init__(self, start_x, start_y):
         super(Hero1, self).__init__(start_x, start_y)
-        self.run_sprite = Sprites(run_sprite)
-        self.stay_sprite = Sprites(stay_sprite)
-        self.jump_sprite = Sprites(jump_sprite)
+        self.run_sprite = Sprites(run_sprite1)
+        self.stay_sprite = Sprites(stay_sprite1)
+        self.jump_sprite = Sprites(jump_sprite1)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:
