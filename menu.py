@@ -3,6 +3,8 @@ import glob
 import pygame
 from constants import *
 from game import *
+import os
+sep = os.path.sep
 
 
 class Button:
@@ -76,7 +78,7 @@ class Menu:
             pygame.display.update()
 
     def change_background(self):
-        files = glob.glob('menu_back/*')
+        files = glob.glob('menu_back' + sep + '*')
         pos = files.index(self.background_image)
         image = files[(pos+1) % len(files)]
         while not image.lower().endswith(('.png', '.jpg')):

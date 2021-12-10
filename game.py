@@ -4,14 +4,16 @@ from field import *
 from constants import *
 from hero import *
 from platforms import *
+import os
+sep = os.path.sep
 
 
 class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.hero_sprites = all_sprites
-        self.hero_1 = Hero(HERO_X, HERO_Y)
-        self.hero_2 = Hero(WIDTH - HERO_X, HEIGHT - HERO_Y)
+        self.hero_1 = Hero1(HERO_X, HERO_Y)
+        self.hero_2 = Hero2(WIDTH - HERO_X, HEIGHT - HERO_Y)
         characters.append(self.hero_1)
         characters.append(self.hero_2)
         self.background_image = game_background
@@ -75,10 +77,8 @@ class Game:
                     pygame.quit()
                     quit()
                 else:
-                    self.hero_1.event_checking_hero_1(event)
-                    self.hero_2.event_checking_hero_2(event)
-                    # self.hero_1.event_checking_hero(event)
-                    # self.hero_2.event_checking_hero(event)
+                    self.hero_1.event_checking_hero(event)
+                    self.hero_2.event_checking_hero(event)
             self.hero_sprites.update(platforms, characters, self.screen)
             for p in platforms:
                 p.update(self.screen)
@@ -88,7 +88,7 @@ class Game:
             pygame.display.update()
 
     def change_background(self):
-        files = glob.glob('game_back/*')
+        files = glob.glob('menu_back' + sep + '*')
         pos = files.index(self.background_image)
         image = files[(pos+1) % len(files)]
         while not image.lower().endswith(('.png', '.jpg')):

@@ -7,16 +7,15 @@ from bullet import *
 
 
 class Hero(pygame.sprite.Sprite):
-    def __init__(self, start_x, start_y, stay_sprite='s_plyr_idle1_strip8.png',
-                 run_sprite='s_plyr_run_strip8.png', hero_size=(HERO_SiZE_X, HERO_SIZE_Y)):
+    def __init__(self, start_x, start_y, hero_size=(HERO_SiZE_X, HERO_SIZE_Y)):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface(hero_size)
         self.hero_size = hero_size
-        self.run_sprite = Sprites(run_sprite)
-        self.stay_sprite = Sprites(stay_sprite)
+        self.run_sprite = Sprites(run_sprite1)
+        self.stay_sprite = Sprites(stay_sprite1)
         self.milli_attack_sprite = Sprites('s_plyr_powUp_strip15.png', 40, 2)
         self.stun_sprite = Sprites('s_plyr_pain2_strip7.png', 60)
-        self.jump_sprite = Sprites('s_plyr_jump_strip7.png')
+        self.jump_sprite = Sprites(jump_sprite1)
         self.rect = self.image.get_rect()
         self.attack_rect = pygame.Surface((hero_size[0], 2*hero_size[1])).get_rect()
         self.rect.center = (start_x, start_y)
@@ -105,44 +104,6 @@ class Hero(pygame.sprite.Sprite):
                 self.Vy = -JUMP_POWER
                 self.onGround = False
 
-    def event_checking_hero_1(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                self.left, self.FACING = True, True
-            elif event.key == pygame.K_d:
-                self.right, self.FACING = True, False
-            elif event.key == pygame.K_w:
-                self.jump = True
-            elif event.key == pygame.K_e:
-                self.shot()
-            elif event.key == pygame.K_q:
-                self.milli_attack = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
-                self.left = False
-            elif event.key == pygame.K_d:
-                self.right = False
-            elif event.key == pygame.K_w:
-                self.jump = False
-
-    def event_checking_hero_2(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                self.left, self.FACING = True, True
-            elif event.key == pygame.K_RIGHT:
-                self.right, self.FACING = True, False
-            elif event.key == pygame.K_UP:
-                self.jump = True
-            elif event.key == pygame.K_BACKSLASH:
-                self.milli_attack = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                self.left = False
-            elif event.key == pygame.K_RIGHT:
-                self.right = False
-            elif event.key == pygame.K_UP:
-                self.jump = False
-
     def collision_x(self, platforms):
         for p in platforms:
             if pygame.sprite.collide_rect(self, p) and not (self is p):
@@ -177,6 +138,55 @@ class Hero(pygame.sprite.Sprite):
         self.Vx = 0
 
 
-# class Hero1(Hero):
-#     def __init__(self, start_x, start_y):
-#         super(Hero1, self).__init__(start_x, start_y)
+class Hero1(Hero):
+    def __init__(self, start_x, start_y):
+        super(Hero1, self).__init__(start_x, start_y)
+        self.jump_sprite = Sprites(jump_sprite1)
+        self.run_sprite = Sprites(run_sprite1)
+        self.stay_sprite = Sprites(stay_sprite1)
+
+    def event_checking_hero(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                self.left, self.FACING = True, True
+            elif event.key == pygame.K_d:
+                self.right, self.FACING = True, False
+            elif event.key == pygame.K_w:
+                self.jump = True
+            elif event.key == pygame.K_e:
+                self.shot()
+            elif event.key == pygame.K_q:
+                self.milli_attack = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a:
+                self.left = False
+            elif event.key == pygame.K_d:
+                self.right = False
+            elif event.key == pygame.K_w:
+                self.jump = False
+
+
+class Hero2(Hero):
+    def __init__(self, start_x, start_y):
+        super(Hero2, self).__init__(start_x, start_y)
+        self.jump_sprite = Sprites(jump_sprite2)
+        self.run_sprite = Sprites(run_sprite2)
+        self.stay_sprite = Sprites(stay_sprite2)
+
+    def event_checking_hero(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                self.left, self.FACING = True, True
+            elif event.key == pygame.K_RIGHT:
+                self.right, self.FACING = True, False
+            elif event.key == pygame.K_UP:
+                self.jump = True
+            elif event.key == pygame.K_SLASH:
+                self.milli_attack = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                self.left = False
+            elif event.key == pygame.K_RIGHT:
+                self.right = False
+            elif event.key == pygame.K_UP:
+                self.jump = False
