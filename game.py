@@ -19,8 +19,9 @@ class Game:
         self.background_image = game_background
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
-        create_field(num_field)
-        create_platforms(num_field.blocks)
+        num_field = create_field([])
+        print(num_field)
+        create_platforms(num_field)
         self.hero_sprites.add(self.hero_1, self.hero_2)
 
     def pause(self):
