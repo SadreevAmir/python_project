@@ -11,7 +11,7 @@ class Bullet(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (HERO_SIZE_Y/2, HERO_SIZE_Y/2))
         self.image = pygame.transform.flip(self.image, kind.FACING, False)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+        self.rect.center = (x, y)
         if self.kind.FACING:
             self.speedy = -10
         else:

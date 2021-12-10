@@ -88,7 +88,7 @@ class Game:
             pygame.display.update()
 
     def change_background(self):
-        files = glob.glob('menu_back' + sep + '*')
+        files = glob.glob('game_back' + sep + '*')
         pos = files.index(self.background_image)
         image = files[(pos+1) % len(files)]
         while not image.lower().endswith(('.png', '.jpg')):

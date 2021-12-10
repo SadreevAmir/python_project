@@ -121,3 +121,18 @@ gun_1.png
 
 Fireball.png
 - 1 images, 501 x 270 each
+
+s_purp_plyr_powUp_strip15.png
+- 15 images, 32 x 29 each
+
+s_purp_plyr_run_strip8.png
+- 8 images, 21 x 18 each, running
+
+s_purp_plyr_idle1_strip8.png
+- 8 images, 16 x 17 each, chewing idle
+
+s_purp_plyr_jump_strip7.png
+- 7 images, 20 x 22 each, jumping
+
+s_purp_plyr_pain2_strip7.png
+- 7 images, 22 x 23 each, reacting to hit

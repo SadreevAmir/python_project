@@ -13,8 +13,8 @@ class Hero(pygame.sprite.Sprite):
         self.hero_size = hero_size
         self.run_sprite = Sprites(run_sprite1)
         self.stay_sprite = Sprites(stay_sprite1)
-        self.milli_attack_sprite = Sprites('s_plyr_powUp_strip15.png', 40, 2)
-        self.stun_sprite = Sprites('s_plyr_pain2_strip7.png', 60)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
+        self.stun_sprite = Sprites(stun_sprite1, 60)
         self.jump_sprite = Sprites(jump_sprite1)
         self.rect = self.image.get_rect()
         self.attack_rect = pygame.Surface((hero_size[0], 2*hero_size[1])).get_rect()
@@ -66,7 +66,7 @@ class Hero(pygame.sprite.Sprite):
                         self.stun = True
 
     def shot(self):
-        all_sprites.add(Bullet(self, self.rect.x, self.rect.y))
+        all_sprites.add(Bullet(self, self.rect.centerx, self.rect.centery))
 
     def death(self):
         ...
@@ -144,25 +144,27 @@ class Hero1(Hero):
         self.jump_sprite = Sprites(jump_sprite1)
         self.run_sprite = Sprites(run_sprite1)
         self.stay_sprite = Sprites(stay_sprite1)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
+        self.stun_sprite = Sprites(stun_sprite1, 60)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == a_key_rus:
                 self.left, self.FACING = True, True
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d or event.key == d_key_rus:
                 self.right, self.FACING = True, False
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_w or event.key == w_key_rus:
                 self.jump = True
-            elif event.key == pygame.K_e:
+            elif event.key == pygame.K_e or event.key == e_key_rus:
                 self.shot()
-            elif event.key == pygame.K_q:
+            elif event.key == pygame.K_q or event.key == q_key_rus:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == a_key_rus:
                 self.left = False
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d or event.key == d_key_rus:
                 self.right = False
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_w or event.key == w_key_rus:
                 self.jump = False
 
 
@@ -172,6 +174,8 @@ class Hero2(Hero):
         self.jump_sprite = Sprites(jump_sprite2)
         self.run_sprite = Sprites(run_sprite2)
         self.stay_sprite = Sprites(stay_sprite2)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite2, 40, 2)
+        self.stun_sprite = Sprites(stun_sprite2, 60)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:
@@ -183,6 +187,8 @@ class Hero2(Hero):
                 self.jump = True
             elif event.key == pygame.K_SLASH:
                 self.milli_attack = True
+            elif event.key == pygame.K_COMMA or event.key == comma_key_rus:
+                self.shot()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 self.left = False
