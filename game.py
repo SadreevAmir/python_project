@@ -9,15 +9,16 @@ from platforms import *
 class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        self.hero_sprites = pygame.sprite.Group()
-        self.hero_1 = Hero1(HERO_X, HERO_Y)
-        self.hero_2 = Hero2(WIDTH - HERO_X, HEIGHT - HERO_Y)
+        self.hero_sprites = all_sprites
+        self.hero_1 = Hero(HERO_X, HERO_Y)
+        self.hero_2 = Hero(WIDTH - HERO_X, HEIGHT - HERO_Y)
+        characters.append(self.hero_1)
+        characters.append(self.hero_2)
         self.background_image = game_background
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
         create_field(num_field)
         create_platforms(num_field.blocks)
-
         self.hero_sprites.add(self.hero_1, self.hero_2)
 
     def pause(self):
@@ -74,9 +75,11 @@ class Game:
                     pygame.quit()
                     quit()
                 else:
-                    self.hero_1.event_checking_hero(event)
-                    self.hero_2.event_checking_hero(event)
-            self.hero_sprites.update(platforms, self.screen)
+                    self.hero_1.event_checking_hero_1(event)
+                    self.hero_2.event_checking_hero_2(event)
+                    # self.hero_1.event_checking_hero(event)
+                    # self.hero_2.event_checking_hero(event)
+            self.hero_sprites.update(platforms, characters, self.screen)
             for p in platforms:
                 p.update(self.screen)
             key = pygame.key.get_pressed()

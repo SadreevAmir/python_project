@@ -1,3 +1,5 @@
+import pygame
+
 NUMBER_OF_HORIZONTAL_BLOCKS = 120
 NUMBER_OF_VERTICAL_BLOCKS = 70
 NUMBER_OF_OBSTACLES = 75
@@ -43,5 +45,9 @@ d_key_rus = 1074
 MOVE_SPEED = 5
 JUMP_POWER = 9
 GRAVITY = 0.35  # Сила, которая будет тянуть нас вниз
+
+characters = []
+
+all_sprites = pygame.sprite.Group()
 
 FPS = 60
