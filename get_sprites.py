@@ -3,13 +3,14 @@ from constants import *
 
 
 class Sprites:
-    def __init__(self, name_file, t=1, directory='sprites/'):
+    def __init__(self, name_file, delay=50, t=1, directory='sprites/'):
         self.filename = directory + name_file
         self.image = pygame.image.load(self.filename)
         self.numbers_image = 0
         self.size_x = 0
         self.size_y = 0
         self.currentFrame = -1
+        self.delay = delay
         #self.delay_counter = 1
         self.last_update = 0
         self.data_search(name_file)
@@ -41,7 +42,7 @@ class Sprites:
 
     def animation(self):
         now = pygame.time.get_ticks()
-        if now - self.last_update > 50:
+        if now - self.last_update > self.delay:
             self.currentFrame = (self.currentFrame + 1) % self.numbers_image
             self.last_update = now
         '''if self.delay_counter == 3:

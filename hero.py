@@ -1,6 +1,7 @@
 from get_sprites import Sprites
 from field import *
 from constants import *
+from bullet import *
 
 
 class Hero(pygame.sprite.Sprite):
@@ -11,8 +12,8 @@ class Hero(pygame.sprite.Sprite):
         self.hero_size = hero_size
         self.run_sprite = Sprites(run_sprite)
         self.stay_sprite = Sprites(stay_sprite)
-        self.milli_attack_sprite = Sprites('s_plyr_powUp_strip15.png', 2)
-        self.stun_sprite = Sprites('s_plyr_pain2_strip7.png')
+        self.milli_attack_sprite = Sprites('s_plyr_powUp_strip15.png', 40, 2)
+        self.stun_sprite = Sprites('s_plyr_pain2_strip7.png', 60)
         self.jump_sprite = Sprites('s_plyr_jump_strip7.png')
         self.rect = self.image.get_rect()
         self.attack_rect = pygame.Surface((hero_size[0], 2*hero_size[1])).get_rect()
@@ -21,21 +22,24 @@ class Hero(pygame.sprite.Sprite):
         self.left, self.right, self.jump, self.milli_attack, self.FACING = False, False, False, False, False
         self.Vx = 0
         self.Vy = 0
+        self.kick_speed = 0
         self.running = False
         self.attack = False
         self.stun = False
-        self.lives = 3
+        self.shot()
+        self.lives = 30
 
     def update(self, platforms, characters, screen):
         self.event_handling()
         self.onGround = False
         self.faze_checking()
-        self.hitcheck(characters)
-        y, x = self.animate(screen)
-        self.movement(platforms)
-        # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
-        screen.blit(self.image, (x, y))
-        self.reset()
+        if True:
+            self.hitcheck(characters)
+            y, x = self.animate(screen)
+            self.movement(platforms)
+            # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
+            screen.blit(self.image, (x, y))
+            self.reset()
 
     def faze_checking(self):
         if self.lives > 0:
@@ -44,19 +48,24 @@ class Hero(pygame.sprite.Sprite):
             elif self.attack and not self.milli_attack:
                 self.attack = False
         else:
-            ...
+            self.kill()
 
     def hitcheck(self, characters):
         for obj in characters:
             if obj.attack and not (self is obj):
                 if self.rect.colliderect(obj.attack_rect):
-                    self.stun = True
-                    if obj.FACING:
-                        self.FACING = False
-                        self.Vx = -10
-                    else:
-                        self.FACING = True
-                        self.Vx = 10
+                    if not self.stun:
+                        self.lives -= 1
+                        if obj.FACING:
+                            self.FACING = False
+                            self.Vx = -10
+                        else:
+                            self.FACING = True
+                            self.Vx = 10
+                        self.stun = True
+
+    def shot(self):
+        all_sprites.add(Bullet(self, self.rect.x, self.rect.y))
 
     def death(self):
         ...
@@ -111,6 +120,8 @@ class Hero(pygame.sprite.Sprite):
                 self.right, self.FACING = True, False
             elif event.key == pygame.K_w:
                 self.jump = True
+            elif event.key == pygame.K_e:
+                self.shot()
             elif event.key == pygame.K_q:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
@@ -171,6 +182,3 @@ class Hero(pygame.sprite.Sprite):
 
     def reset(self):
         self.Vx = 0
-
-
-

@@ -109,3 +109,6 @@ s_pow_bar_strip10.png
 
 gun_1.png
 - 1 images, 130 x 50 each
+
+Fireball.png
+- 1 images, 501 x 270 each
