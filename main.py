@@ -6,9 +6,12 @@ from platforms import *
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen.fill([55, 255, 255])
-all_sprites = pygame.sprite.Group()
+#all_sprites = pygame.sprite.Group()
 hero_1 = Hero(HERO_X, HERO_Y)
 hero_2 = Hero(WIDTH - HERO_X, HEIGHT - HERO_Y)
+#characters = []
+characters.append(hero_1)
+characters.append(hero_2)
 
 
 num_field = NumberField(NUMBER_OF_HORIZONTAL_BLOCKS, NUMBER_OF_VERTICAL_BLOCKS,
@@ -38,7 +41,7 @@ while not finished:
         else:
             hero_1.event_checking_hero_1(event)
             hero_2.event_checking_hero_2(event)
-    all_sprites.update(platforms, screen)
+    all_sprites.update(platforms, characters, screen)
     pygame.display.update()
 
 pygame.quit()

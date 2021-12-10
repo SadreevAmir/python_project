@@ -11,7 +11,7 @@ class Platform(pygame.sprite.Sprite):
         self.image.fill([0, 0, 0])
         self.rect = pygame.Rect(x, y, a, b)
 
-    def update(self, platforms, screen):
+    def update(self, platforms, characters, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
 platforms = []
