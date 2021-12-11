@@ -13,7 +13,7 @@ class Hero(pygame.sprite.Sprite):
         self.hero_size = hero_size
         self.run_sprite = Sprites(run_sprite1)
         self.stay_sprite = Sprites(stay_sprite1)
-        self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 1)
         self.stun_sprite = Sprites(stun_sprite1, 60)
         self.jump_sprite = Sprites(jump_sprite1)
         self.rect = self.image.get_rect()
@@ -170,11 +170,11 @@ class Hero1(Hero):
 class Hero2(Hero):
     def __init__(self, start_x, start_y):
         super(Hero2, self).__init__(start_x, start_y)
-        self.jump_sprite = Sprites(jump_sprite2)
-        self.run_sprite = Sprites(run_sprite2)
-        self.stay_sprite = Sprites(stay_sprite2)
-        self.milli_attack_sprite = Sprites(milli_attack_sprite2, 40, 2)
-        self.stun_sprite = Sprites(stun_sprite2, 60)
+        self.jump_sprite = Sprites(jump_sprite3)
+        self.run_sprite = Sprites(run_sprite3)
+        self.stay_sprite = Sprites(stay_sprite3)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite3, 40, 1)
+        self.stun_sprite = Sprites(stun_sprite3, 60)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:
@@ -195,3 +195,26 @@ class Hero2(Hero):
                 self.right = False
             elif event.key == pygame.K_UP:
                 self.jump = False
+
+    def animate(self, screen):
+        if self.stun:
+            self.image = self.stun_sprite.get_sprite(self.FACING)
+            if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:
+                self.stun = False
+            return self.rect.y, self.rect.x
+        elif self.attack:
+            self.image = self.milli_attack_sprite.get_sprite(self.FACING)
+            if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+                self.milli_attack = False
+            if self.FACING:
+                self.attack_rect.bottomright = self.rect.bottomleft
+                return 2*self.rect.y - self.rect.top, 2*self.rect.x - self.rect.left
+            else:
+                self.attack_rect.bottomleft = self.rect.bottomright
+                return 2*self.rect.y - self.rect.top, self.rect.x
+        elif (self.right or self.left) and (not self.right or not self.left):
+            self.image = self.run_sprite.get_sprite(self.FACING)
+            return self.rect.y, self.rect.x
+        else:
+            self.image = self.stay_sprite.get_sprite(self.FACING)
+            return self.rect.y, self.rect.x
