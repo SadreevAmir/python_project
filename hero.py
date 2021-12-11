@@ -59,10 +59,11 @@ class Hero(pygame.sprite.Sprite):
                         self.lives -= 1
                         if obj.FACING:
                             self.FACING = False
-                            self.Vx = -10
+                            self.kick_speed = -10
                         else:
                             self.FACING = True
-                            self.Vx = 10
+                            self.kick_speed = 10
+                        self.Vy -= 2
                         self.stun = True
 
     def shot(self):
@@ -127,6 +128,7 @@ class Hero(pygame.sprite.Sprite):
                     self.Vy = 0
 
     def movement(self, platforms):
+        self.Vx += self.kick_speed
         self.rect.x += self.Vx
         self.collision_x(platforms)
         if not self.onGround:
@@ -136,6 +138,10 @@ class Hero(pygame.sprite.Sprite):
 
     def reset(self):
         self.Vx = 0
+        if self.kick_speed > 0:
+            self.kick_speed -= 1
+        elif self.kick_speed < 0:
+            self.kick_speed += 1
 
 
 class Hero1(Hero):
