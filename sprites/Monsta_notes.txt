@@ -5,8 +5,14 @@ Notes about the Monsta files, for your ease of use.
 blue_stay12.png
 - 12 images, 24 x 24 each, staying
 
+blue_stun7.png
+- 7 images, 24 x 24 each, stunning
+
 blue_run6.png
 - 6 images, 24 x 24 each, running
+
+blue_punch12.png
+- 12 images, 24 x 24 each, punching
 
 blue_jump7.png
 - 7 images, 24 x 24 each, jumping

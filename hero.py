@@ -202,3 +202,26 @@ class Hero2(Hero):
                 self.right = False
             elif event.key == pygame.K_UP:
                 self.jump = False
+
+    def animate(self, screen):
+        if self.stun:
+            self.image = self.stun_sprite.get_sprite(self.FACING)
+            if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:
+                self.stun = False
+            return self.rect.y, self.rect.x
+        elif self.attack:
+            self.image = self.milli_attack_sprite.get_sprite(self.FACING)
+            if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+                self.milli_attack = False
+            if self.FACING:
+                self.attack_rect.bottomright = self.rect.bottomleft
+                return 2*self.rect.y - self.rect.top, 2*self.rect.x - self.rect.left
+            else:
+                self.attack_rect.bottomleft = self.rect.bottomright
+                return 2*self.rect.y - self.rect.top, self.rect.x
+        elif (self.right or self.left) and (not self.right or not self.left):
+            self.image = self.run_sprite.get_sprite(self.FACING)
+            return self.rect.y, self.rect.x
+        else:
+            self.image = self.stay_sprite.get_sprite(self.FACING)
+            return self.rect.y, self.rect.x
