@@ -8,7 +8,7 @@ from menu import *
 pygame.init()
 
 screen = pygame.display.set_mode((1000, 600))
-MainMenu(screen, menu_background).show()
+MainMenu(screen, menu_background, lambda: Game().start_game()).show()
 
 pygame.quit()
 

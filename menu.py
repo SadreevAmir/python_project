@@ -2,7 +2,7 @@ import glob
 
 import pygame
 from constants import *
-from game import *
+# from game import *
 import os
 sep = os.path.sep
 
@@ -88,26 +88,28 @@ class Menu:
 
 
 class MainMenu(Menu):
-    def __init__(self, screen, background_image):
+    def __init__(self, screen, background_image, start_function=lambda: None):
         super(MainMenu, self).__init__(screen, background_image)
 
-        self.start_button = Button(self.screen, 'play', YELLOW, PURPLE, lambda: Game().start_game())
+        self.start_button = Button(self.screen, 'play', YELLOW, PURPLE, lambda: start_function())
         self.settings_button = Button(self.screen, 'settings', YELLOW, BROWN,
-                                      lambda: SettingsMenu(self.screen, self.background_image).show())
+                                      lambda: SettingsMenu(self.screen, self.background_image,
+                                                           lambda: start_function()).show())
         self.quit_button = Button(self.screen, 'quit', YELLOW, RED, quit)
 
         self.buttons = [self.start_button, self.settings_button, self.quit_button]
 
 
 class SettingsMenu(Menu):
-    def __init__(self, screen, background_image):
+    def __init__(self, screen, background_image, start_function=lambda: None):
         super(SettingsMenu, self).__init__(screen, background_image)
 
         self.back_button = Button(self.screen, 'back', YELLOW, PURPLE,
-                                  lambda: MainMenu(self.screen, self.background_image).show())
+                                  lambda: MainMenu(self.screen, self.background_image, lambda: start_function()).show())
         self.change_background_button = Button(self.screen, 'change background', YELLOW, BLUE,
                                                lambda: self.change_background(),
-                                               lambda: SettingsMenu(self.screen, self.background_image).show())
+                                               lambda: SettingsMenu(self.screen, self.background_image,
+                                                                    lambda: start_function()).show())
 
         self.buttons = [self.back_button, self.change_background_button]
 
