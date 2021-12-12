@@ -62,6 +62,7 @@ JUMP_POWER = 9
 GRAVITY = 0.35  # Сила, которая будет тянуть нас вниз
 
 characters = []
+num_field = []
 
 all_sprites = pygame.sprite.Group()
 

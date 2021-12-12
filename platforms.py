@@ -18,11 +18,12 @@ class Platform(pygame.sprite.Sprite):
 platforms = []
 
 
-def create_platforms(number_field):
+def create_platforms(num_field):
     platforms.clear()
     for i in range(NUMBER_OF_VERTICAL_BLOCKS):
         for j in range(NUMBER_OF_HORIZONTAL_BLOCKS):
-            if number_field[i][j] != 0:
+            if num_field[i][j] != 0:
                 platform = Platform(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
                 platforms.append(platform)
+
 
