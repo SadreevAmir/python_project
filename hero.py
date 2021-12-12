@@ -42,10 +42,10 @@ class Hero(pygame.sprite.Sprite):
         self.event_handling()
         self.onGround = False
         self.power = self.power_bar.currentFrame
-        self.health_bar.currentFrame = self.lives
         # print(self.health_bar.currentFrame)
         self.faze_checking()
         self.hitcheck(characters)
+        self.health_bar.currentFrame = self.lives
         y, x = self.animate(screen)
         self.health_bar_rect.midbottom = self.rect.midtop
         self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
