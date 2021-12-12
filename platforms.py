@@ -1,3 +1,4 @@
+from os import truncate
 import pygame
 from constants import *
 from hero import *
@@ -10,14 +11,19 @@ class Platform(pygame.sprite.Sprite):
         self.image = pygame.Surface((a, b))
         self.rect = pygame.Rect(x, y, a, b)
         self.lives = PLATFORMS_LIVES
+        self.hit = False
 
     def hitcheck(self, characters):
         for obj in characters:
             if obj.attack:
                 if self.rect.colliderect(obj.attack_rect):
-                    self.lives -= 1
+                    if not self.hit:
+                        self.hit = True
+                        self.lives -= 1
                     if self.lives == 0 or self.lives == -1:
                         platforms.remove(self)
+
+                    self.hit = False
 
 
     def update(self, screen):
@@ -26,8 +32,6 @@ class Platform(pygame.sprite.Sprite):
         self.image.fill(self.color)
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.hitcheck(characters)
-
-
 platforms = []
 
 
@@ -37,6 +41,9 @@ def create_platforms(num_field):
         for j in range(NUMBER_OF_HORIZONTAL_BLOCKS):
             if num_field[i][j] != 0:
                 platform = Platform(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
+                platform.lives = num_field[i][j]
                 platforms.append(platform)
+
+    
 
 

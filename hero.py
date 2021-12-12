@@ -1,4 +1,5 @@
 import pygame
+from pygame.constants import MOUSEBUTTONDOWN
 
 from get_sprites import Sprites
 from field import *
@@ -172,6 +173,9 @@ class Hero1(Hero):
         self.stun_sprite = Sprites(stun_sprite1, 60)
 
     def event_checking_hero(self, event):
+        if event.type == MOUSEBUTTONDOWN:
+            if event.button == 1:
+                self.shotting = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a or event.key == a_key_rus:
                 self.left, self.FACING = True, True
@@ -213,6 +217,9 @@ class Hero2(Hero):
         self.stun_sprite = Sprites(stun_sprite3, 60)
 
     def event_checking_hero(self, event):
+        if event.type == MOUSEBUTTONDOWN:
+            if event.button == 3:
+                self.shotting = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.left, self.FACING = True, True
