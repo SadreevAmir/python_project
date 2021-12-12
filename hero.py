@@ -27,27 +27,40 @@ class Hero(pygame.sprite.Sprite):
         self.running = False
         self.attack = False
         self.stun = False
-        self.shot()
-        self.lives = 30
+        self.shotting = False
+        self.lives = 14
+        self.power_bar = Sprites('s_pow_bar_strip10.png', 2000, 1, True)
+        self.power_bar_rect = self.power_bar.sprite.get_rect()
+        self.power_bar.currentFrame = 4
+        self.power = 4
+        self.health_bar = pygame.image.load('sprites/s_health_bar.png')
+
+        self.health_bar_rect = self.health_bar.get_rect()
 
     def update(self, platforms, characters, screen):
         self.event_handling()
         self.onGround = False
+        self.power = self.power_bar.currentFrame
         self.faze_checking()
-        if True:
-            self.hitcheck(characters)
-            y, x = self.animate(screen)
-            self.movement(platforms)
-            # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
-            screen.blit(self.image, (x, y))
-            self.reset()
+        self.hitcheck(characters)
+        y, x = self.animate(screen)
+        # self.health_bar_rect.midbottom = self.rect.midtop
+        self.power_bar_rect.bottomleft = self.rect.topleft
+        self.movement(platforms)
+        pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
+        screen.blit(self.image, (x, y))
+        # screen.blit(self.health_bar, self.health_bar_rect.topleft)
+        screen.blit(self.power_bar.sprite, self.power_bar_rect.topleft)
+        self.reset()
 
     def faze_checking(self):
         if self.lives > 0:
-            if not self.attack and self.milli_attack:
+            if not self.attack and self.milli_attack and self.power > 3:
                 self.attack = True
-            elif self.attack and not self.milli_attack:
-                self.attack = False
+                self.power_bar.currentFrame -= 4
+            elif self.shotting and self.power > 1:
+                self.shot()
+                self.power_bar.currentFrame -= 2
         else:
             self.kill()
 
@@ -63,37 +76,34 @@ class Hero(pygame.sprite.Sprite):
                         else:
                             self.FACING = True
                             self.kick_speed = 10
-                        self.Vy -= 2
+                        self.Vy -= 3
                         self.stun = True
 
     def shot(self):
         all_sprites.add(Bullet(self, self.rect.centerx, self.rect.centery))
+        self.shotting = False
 
     def death(self):
         ...
 
     def animate(self, screen):
+        self.power_bar.get_sprite()
         if self.stun:
             self.image = self.stun_sprite.get_sprite(self.FACING)
             if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:
                 self.stun = False
             return self.rect.y, self.rect.x
         elif self.attack:
-            self.image = self.milli_attack_sprite.get_sprite(self.FACING)
-            if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
-                self.milli_attack = False
-            if self.FACING:
-                self.attack_rect.bottomright = self.rect.bottomleft
-                return 2*self.rect.y - self.rect.bottom, 2*self.rect.x - self.rect.right
-            else:
-                self.attack_rect.bottomleft = self.rect.bottomright
-                return 2*self.rect.y - self.rect.bottom, self.rect.x
+            return self.special_attack()
         elif (self.right or self.left) and (not self.right or not self.left):
             self.image = self.run_sprite.get_sprite(self.FACING)
             return self.rect.y, self.rect.x
         else:
             self.image = self.stay_sprite.get_sprite(self.FACING)
             return self.rect.y, self.rect.x
+
+    def special_attack(self):
+        ...
 
     def event_handling(self):
         if not self.stun:
@@ -138,6 +148,7 @@ class Hero(pygame.sprite.Sprite):
 
     def reset(self):
         self.Vx = 0
+        self.milli_attack = self.shotting = False
         if self.kick_speed > 0:
             self.kick_speed -= 1
         elif self.kick_speed < 0:
@@ -162,7 +173,7 @@ class Hero1(Hero):
             elif event.key == pygame.K_w or event.key == w_key_rus:
                 self.jump = True
             elif event.key == pygame.K_e or event.key == e_key_rus:
-                self.shot()
+                self.shotting = True
             elif event.key == pygame.K_q or event.key == q_key_rus:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
@@ -173,15 +184,26 @@ class Hero1(Hero):
             elif event.key == pygame.K_w or event.key == w_key_rus:
                 self.jump = False
 
+    def special_attack(self):
+        self.image = self.milli_attack_sprite.get_sprite(self.FACING)
+        if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+            self.attack = False
+        if self.FACING:
+            self.attack_rect.bottomright = self.rect.bottomleft
+            return 2 * self.rect.y - self.rect.bottom, 2 * self.rect.x - self.rect.right
+        else:
+            self.attack_rect.bottomleft = self.rect.bottomright
+            return 2 * self.rect.y - self.rect.bottom, self.rect.x
+
 
 class Hero2(Hero):
     def __init__(self, start_x, start_y):
         super(Hero2, self).__init__(start_x, start_y)
-        self.jump_sprite = Sprites(jump_sprite2)
-        self.run_sprite = Sprites(run_sprite2)
-        self.stay_sprite = Sprites(stay_sprite2)
-        self.milli_attack_sprite = Sprites(milli_attack_sprite2, 40, 2)
-        self.stun_sprite = Sprites(stun_sprite2, 60)
+        self.jump_sprite = Sprites(jump_sprite3)
+        self.run_sprite = Sprites(run_sprite3)
+        self.stay_sprite = Sprites(stay_sprite3)
+        self.milli_attack_sprite = Sprites(milli_attack_sprite3, 40, 1)
+        self.stun_sprite = Sprites(stun_sprite3, 60)
 
     def event_checking_hero(self, event):
         if event.type == pygame.KEYDOWN:
@@ -193,8 +215,8 @@ class Hero2(Hero):
                 self.jump = True
             elif event.key == pygame.K_SLASH:
                 self.milli_attack = True
-            elif event.key == pygame.K_COMMA or event.key == comma_key_rus:
-                self.shot()
+            elif event.key == pygame.K_PAGEDOWN or event.key == comma_key_rus:
+                self.shotting = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 self.left = False
@@ -203,25 +225,13 @@ class Hero2(Hero):
             elif event.key == pygame.K_UP:
                 self.jump = False
 
-    def animate(self, screen):
-        if self.stun:
-            self.image = self.stun_sprite.get_sprite(self.FACING)
-            if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:
-                self.stun = False
-            return self.rect.y, self.rect.x
-        elif self.attack:
-            self.image = self.milli_attack_sprite.get_sprite(self.FACING)
-            if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
-                self.milli_attack = False
-            if self.FACING:
-                self.attack_rect.bottomright = self.rect.bottomleft
-                return 2*self.rect.y - self.rect.top, 2*self.rect.x - self.rect.left
-            else:
-                self.attack_rect.bottomleft = self.rect.bottomright
-                return 2*self.rect.y - self.rect.top, self.rect.x
-        elif (self.right or self.left) and (not self.right or not self.left):
-            self.image = self.run_sprite.get_sprite(self.FACING)
+    def special_attack(self):
+        self.image = self.milli_attack_sprite.get_sprite(self.FACING)
+        if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+            self.attack = False
+        if self.FACING:
+            self.attack_rect.bottomright = self.rect.bottomleft
             return self.rect.y, self.rect.x
         else:
-            self.image = self.stay_sprite.get_sprite(self.FACING)
+            self.attack_rect.bottomleft = self.rect.bottomright
             return self.rect.y, self.rect.x
