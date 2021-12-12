@@ -28,28 +28,31 @@ class Hero(pygame.sprite.Sprite):
         self.attack = False
         self.stun = False
         self.shotting = False
-        self.lives = 14
         self.power_bar = Sprites('s_pow_bar_strip10.png', 2000, 1, True)
         self.power_bar_rect = self.power_bar.sprite.get_rect()
         self.power_bar.currentFrame = 4
         self.power = 4
-        self.health_bar = pygame.image.load('sprites/s_health_bar.png')
-
-        self.health_bar_rect = self.health_bar.get_rect()
+        self.health_bar = Sprites('S_health_bars.png', 20000, 1, True)
+        self.health_bar_rect = self.health_bar.sprite.get_rect()
+        self.health_bar.currentFrame = 9
+        self.health_bar.get_sprite()
+        self.lives = 9
 
     def update(self, platforms, characters, screen):
         self.event_handling()
         self.onGround = False
         self.power = self.power_bar.currentFrame
+        self.health_bar.currentFrame = self.lives
+        # print(self.health_bar.currentFrame)
         self.faze_checking()
         self.hitcheck(characters)
         y, x = self.animate(screen)
-        # self.health_bar_rect.midbottom = self.rect.midtop
-        self.power_bar_rect.bottomleft = self.rect.topleft
+        self.health_bar_rect.midbottom = self.rect.midtop
+        self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
         self.movement(platforms)
-        pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
+        # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
         screen.blit(self.image, (x, y))
-        # screen.blit(self.health_bar, self.health_bar_rect.topleft)
+        screen.blit(self.health_bar.sprite, self.health_bar_rect.topleft)
         screen.blit(self.power_bar.sprite, self.power_bar_rect.topleft)
         self.reset()
 
@@ -87,7 +90,11 @@ class Hero(pygame.sprite.Sprite):
         ...
 
     def animate(self, screen):
-        self.power_bar.get_sprite()
+        if self.power_bar.currentFrame < self.power_bar.numbers_image - 1:
+            self.power_bar.get_sprite()
+        if self.health_bar.currentFrame < self.health_bar.numbers_image - 1:
+            self.health_bar.get_sprite()
+            self.lives = self.health_bar.currentFrame
         if self.stun:
             self.image = self.stun_sprite.get_sprite(self.FACING)
             if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:

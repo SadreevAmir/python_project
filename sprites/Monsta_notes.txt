@@ -142,3 +142,6 @@ s_purp_plyr_jump_strip7.png
 
 s_purp_plyr_pain2_strip7.png
 - 7 images, 22 x 23 each, reacting to hit
+
+S_health_bars.png
+- 10 images, 42 x 10 each, health_bar

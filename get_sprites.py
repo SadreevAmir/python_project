@@ -17,7 +17,7 @@ class Sprites:
         self.size_x *= t
         self.size_y *= t
         self.image = pygame.transform.scale(self.image, (self.size_x * self.numbers_image, self.size_y))
-        self.sprite = self.get_sprite()
+        self.get_sprite()
 
     def data_search(self, search_object, real_size, search_location='sprites/Monsta_notes.txt'):
         with open(search_location, 'r') as f:
