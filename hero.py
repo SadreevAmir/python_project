@@ -1,10 +1,11 @@
 import pygame
-from pygame.constants import MOUSEBUTTONDOWN
+from pygame.constants import K_SPACE, MOUSEBUTTONDOWN
 
 from get_sprites import Sprites
 from field import *
 from constants import *
 from bullet import *
+from music2 import *
 
 
 class Hero(pygame.sprite.Sprite):
@@ -85,7 +86,9 @@ class Hero(pygame.sprite.Sprite):
 
     def shot(self):
         all_sprites.add(Bullet(self, self.rect.centerx, self.rect.centery))
+        fireball_music()
         self.shotting = False
+
 
     def death(self):
         ...
@@ -185,7 +188,7 @@ class Hero1(Hero):
                 self.jump = True
             elif event.key == pygame.K_e or event.key == e_key_rus:
                 self.shotting = True
-            elif event.key == pygame.K_q or event.key == q_key_rus:
+            elif event.key == pygame.K_q or event.key == q_key_rus or event.key == K_SPACE:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == a_key_rus:
@@ -198,6 +201,7 @@ class Hero1(Hero):
     def special_attack(self):
         self.image = self.milli_attack_sprite.get_sprite(self.FACING)
         if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+            punch_music()
             self.attack = False
         if self.FACING:
             self.attack_rect.bottomright = self.rect.bottomleft
@@ -242,6 +246,7 @@ class Hero2(Hero):
     def special_attack(self):
         self.image = self.milli_attack_sprite.get_sprite(self.FACING)
         if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
+            punch_music()
             self.attack = False
         if self.FACING:
             self.attack_rect.bottomright = self.rect.bottomleft

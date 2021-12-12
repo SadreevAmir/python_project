@@ -2,7 +2,6 @@ import glob
 
 import pygame
 from constants import *
-# from game import *
 import os
 sep = os.path.sep
 
