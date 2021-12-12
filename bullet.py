@@ -26,6 +26,9 @@ class Bullet(pygame.sprite.Sprite):
     def collision(self, platforms, characters):
         for p in platforms:
             if self.rect.colliderect(p) and not (self.kind is p):
+                p.lives -= 1
+                if p.lives == 0:
+                    platforms.remove(p)
                 self.kill()
         for kind in characters:
             if self.rect.colliderect(kind) and not (kind is self.kind):

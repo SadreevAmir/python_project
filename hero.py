@@ -27,7 +27,7 @@ class Hero(pygame.sprite.Sprite):
         self.running = False
         self.attack = False
         self.stun = False
-        self.lives = 30
+        self.lives = HERO_LIVES
 
     def update(self, platforms, characters, screen):
         self.event_handling()
