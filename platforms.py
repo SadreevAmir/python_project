@@ -32,7 +32,6 @@ class Platform(pygame.sprite.Sprite):
         self.image.fill(self.color)
         screen.blit(self.image, (self.rect.x, self.rect.y))
         self.hitcheck(characters)
-platforms = []
 
 
 def create_platforms(num_field):
