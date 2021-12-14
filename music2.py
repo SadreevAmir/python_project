@@ -8,7 +8,8 @@ def background_music():
 
 
 def fireball_music():
-    pygame.mixer.Channel(1).play(pygame.mixer.Sound('music/bolshoy-vzryiv.wav'))
+    pygame.mixer.Channel(1).play(
+        pygame.mixer.Sound('music/bolshoy-vzryiv.wav'))
 
 
 def punch_music():
@@ -29,3 +30,4 @@ def switch_sound_effects():
     else:
         pygame.mixer.Channel(1).set_volume(1)
         pygame.mixer.Channel(2).set_volume(2)
+
