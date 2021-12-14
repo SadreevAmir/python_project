@@ -29,14 +29,14 @@ class NUM_FIELD:
                     self.blocks[i][j] = 0
 
     def make_specaial_tunnel(self):
-        a = 0.001
-        b = random.uniform(-0.08, -0.11)
+        a = 0.0001
+        b = random.uniform(-0.026, -0.01)
         k = HERO_SiZE_X//BLOCK_SIZE - 1
         c = -a*NUMBER_OF_HORIZONTAL_BLOCKS**2 + NUMBER_OF_VERTICAL_BLOCKS/NUMBER_OF_HORIZONTAL_BLOCKS - b*NUMBER_OF_HORIZONTAL_BLOCKS
         change = False
         changes = 0
         for j in range(5):
-            for i in range(2, NUMBER_OF_HORIZONTAL_BLOCKS - 2):
+            for i in range(4, NUMBER_OF_HORIZONTAL_BLOCKS - 4):
                 if round(a*i**3 + b*i**2 + c*i) <= 2 or round(a*i**3 + b*i**2 + c*i) >= NUMBER_OF_VERTICAL_BLOCKS - 2:
                     change = True
             if change:
@@ -49,7 +49,7 @@ class NUM_FIELD:
             b = 0
             c = -a*NUMBER_OF_HORIZONTAL_BLOCKS**2 + NUMBER_OF_VERTICAL_BLOCKS/NUMBER_OF_HORIZONTAL_BLOCKS - b*NUMBER_OF_HORIZONTAL_BLOCKS
     
-        for i in range(2, NUMBER_OF_HORIZONTAL_BLOCKS - 2):
+        for i in range(4, NUMBER_OF_HORIZONTAL_BLOCKS - 4):
             y = round(a*i**3 + b*i**2 + c*i)
             for j in range(i - k - 1, i + k):
                 for l in range(y - k - 1 , y + k):
@@ -65,7 +65,7 @@ class NUM_FIELD:
                 if  self.blocks[i][j] >= 0.1:
                     self.blocks[i][j] = PLATFORMS_LIVES
                 else:
-                    self.blocks[i][j] = 0
+                    self.blocks[i][j] = 1
 
         self.make_specaial_tunnel()
         self.create_vertical_borders()
