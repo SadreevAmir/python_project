@@ -6,6 +6,7 @@ from hero import *
 from platforms import *
 import os
 sep = os.path.sep
+from menu import *
 
 
 class Game:
@@ -20,8 +21,10 @@ class Game:
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
         num_field = create_field([])
-        print(num_field)
+        # print(num_field)
         create_platforms(num_field)
+        # platforms.append(self.hero_1)
+        # platforms.append(self.hero_2)
         self.hero_sprites.add(self.hero_1, self.hero_2)
 
     def pause(self):
@@ -43,16 +46,14 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     paused = False
-                    pygame.quit()
-                    quit()
+                    self.end_game()
                 if pygame.mouse.get_pressed()[0] == 1:
                     paused = False
             key = pygame.key.get_pressed()
             if key[pygame.K_RETURN]:
                 paused = False
             elif key[pygame.K_BACKSPACE]:
-                pygame.quit()
-                quit()
+                self.end_game()
             elif key[pygame.K_RSHIFT] or key[pygame.K_LSHIFT]:
                 self.change_background()
                 game_back = pygame.image.load(self.background_image).convert()
@@ -75,8 +76,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     finished = True
-                    pygame.quit()
-                    quit()
+                    self.end_game()
+                    # pygame.quit()
+                    # quit()
                 else:
                     self.hero_1.event_checking_hero(event)
                     self.hero_2.event_checking_hero(event)
@@ -87,6 +89,14 @@ class Game:
             if key[pygame.K_ESCAPE]:
                 self.pause()
             pygame.display.update()
+
+    def end_game(self):
+        all_sprites.empty()
+        self.hero_sprites.empty()
+        platforms.clear()
+        characters.clear()
+        screen = pygame.display.set_mode((1000, 600))
+        MainMenu(screen, menu_background, lambda: Game().start_game()).show()
 
     def change_background(self):
         files = glob.glob('game_back' + sep + '*')
