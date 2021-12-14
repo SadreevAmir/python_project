@@ -18,6 +18,7 @@ class Hero(pygame.sprite.Sprite):
         self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
         self.stun_sprite = Sprites(stun_sprite1, 60)
         self.jump_sprite = Sprites(jump_sprite1)
+        self.death_sprite = Sprites(death_sprite1)
         self.rect = self.image.get_rect()
         self.attack_rect = pygame.Surface((hero_size[0], 2*hero_size[1])).get_rect()
         self.rect.center = (start_x, start_y)
@@ -39,18 +40,19 @@ class Hero(pygame.sprite.Sprite):
         self.health_bar.currentFrame = 9
         self.health_bar.get_sprite()
         self.lives = 9
+        self.death = False
 
     def update(self, platforms, characters, screen):
-        self.event_handling()
-        self.onGround = False
-        self.power = self.power_bar.currentFrame
-        # print(self.health_bar.currentFrame)
-        self.faze_checking()
-        self.hitcheck(characters)
-        self.health_bar.currentFrame = self.lives
-        y, x = self.animate(screen)
-        self.health_bar_rect.midbottom = self.rect.midtop
-        self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
+        if not self.death:
+            self.event_handling()
+            self.power = self.power_bar.currentFrame
+            # print(self.health_bar.currentFrame)
+            self.faze_checking()
+            self.hitcheck(characters)
+            self.health_bar.currentFrame = self.lives
+            y, x = self.animate()
+        else:
+            y, x = self.death_animate()
         self.movement(platforms)
         # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
         screen.blit(self.image, (x, y))
@@ -62,12 +64,13 @@ class Hero(pygame.sprite.Sprite):
         if self.lives > 0:
             if not self.attack and self.milli_attack and self.power > 3:
                 self.attack = True
+                punch_music()
                 self.power_bar.currentFrame -= 4
             elif self.shotting and self.power > 1:
                 self.shot()
                 self.power_bar.currentFrame -= 2
         else:
-            self.kill()
+            self.death = True
 
     def hitcheck(self, characters):
         for obj in characters:
@@ -89,16 +92,21 @@ class Hero(pygame.sprite.Sprite):
         fireball_music()
         self.shotting = False
 
-
-    def death(self):
+    def died(self):
         ...
 
-    def animate(self, screen):
+    def animate(self):
         if self.power_bar.currentFrame < self.power_bar.numbers_image - 1:
             self.power_bar.get_sprite()
+        else:
+            self.power_bar.last_update = pygame.time.get_ticks()
         if self.health_bar.currentFrame < self.health_bar.numbers_image - 1:
             self.health_bar.get_sprite()
             self.lives = self.health_bar.currentFrame
+        else:
+            self.health_bar.last_update = pygame.time.get_ticks()
+        self.health_bar_rect.midbottom = self.rect.midtop
+        self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
         if self.stun:
             self.image = self.stun_sprite.get_sprite(self.FACING)
             if self.stun_sprite.currentFrame == self.stun_sprite.numbers_image - 1:
@@ -113,6 +121,12 @@ class Hero(pygame.sprite.Sprite):
             self.image = self.stay_sprite.get_sprite(self.FACING)
             return self.rect.y, self.rect.x
 
+    def death_animate(self):
+        self.health_bar_rect.midbottom = self.rect.midtop
+        self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
+        self.image = self.death_sprite.get_sprite()
+        return self.rect.y, self.rect.x
+
     def special_attack(self):
         ...
 
@@ -125,6 +139,7 @@ class Hero(pygame.sprite.Sprite):
             if self.onGround and self.jump:
                 self.Vy = -JUMP_POWER
                 self.onGround = False
+        self.onGround = False
 
     def collision_x(self, platforms):
         for p in platforms:
@@ -174,6 +189,7 @@ class Hero1(Hero):
         self.stay_sprite = Sprites(stay_sprite1)
         self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
         self.stun_sprite = Sprites(stun_sprite1, 60)
+        self.death_sprite = Sprites(death_sprite1)
 
     def event_checking_hero(self, event):
         if event.type == MOUSEBUTTONDOWN:
@@ -201,7 +217,6 @@ class Hero1(Hero):
     def special_attack(self):
         self.image = self.milli_attack_sprite.get_sprite(self.FACING)
         if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
-            punch_music()
             self.attack = False
         if self.FACING:
             self.attack_rect.bottomright = self.rect.bottomleft
@@ -219,6 +234,7 @@ class Hero2(Hero):
         self.stay_sprite = Sprites(stay_sprite3)
         self.milli_attack_sprite = Sprites(milli_attack_sprite3, 40, 1)
         self.stun_sprite = Sprites(stun_sprite3, 60)
+        self.death_sprite = Sprites(death_sprite3, 50)
 
     def event_checking_hero(self, event):
         if event.type == MOUSEBUTTONDOWN:
@@ -246,7 +262,6 @@ class Hero2(Hero):
     def special_attack(self):
         self.image = self.milli_attack_sprite.get_sprite(self.FACING)
         if self.milli_attack_sprite.currentFrame == self.milli_attack_sprite.numbers_image - 1:
-            punch_music()
             self.attack = False
         if self.FACING:
             self.attack_rect.bottomright = self.rect.bottomleft
