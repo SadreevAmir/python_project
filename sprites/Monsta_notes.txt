@@ -17,6 +17,9 @@ blue_punch12.png
 blue_jump7.png
 - 7 images, 24 x 24 each, jumping
 
+blue_death1.png
+- 1 images, 24 x 24 each, death
+
 s_health_back.png
 -back graphic for monsta healthbar
 
