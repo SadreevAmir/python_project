@@ -37,9 +37,9 @@ class Hero(pygame.sprite.Sprite):
         self.power = 4
         self.health_bar = Sprites('S_health_bars.png', 20000, 1, True)
         self.health_bar_rect = self.health_bar.sprite.get_rect()
-        self.health_bar.currentFrame = 9
+        self.health_bar.currentFrame = 4
         self.health_bar.get_sprite()
-        self.lives = 9
+        self.lives = self.health_bar.currentFrame
         self.death = False
 
     def update(self, platforms, characters, screen):
@@ -51,13 +51,13 @@ class Hero(pygame.sprite.Sprite):
             self.hitcheck(characters)
             self.health_bar.currentFrame = self.lives
             y, x = self.animate()
+            screen.blit(self.power_bar.sprite, self.power_bar_rect.topleft)
         else:
             y, x = self.death_animate()
         self.movement(platforms)
         # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
         screen.blit(self.image, (x, y))
         screen.blit(self.health_bar.sprite, self.health_bar_rect.topleft)
-        screen.blit(self.power_bar.sprite, self.power_bar_rect.topleft)
         self.reset()
 
     def faze_checking(self):
@@ -123,7 +123,7 @@ class Hero(pygame.sprite.Sprite):
 
     def death_animate(self):
         self.health_bar_rect.midbottom = self.rect.midtop
-        self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
+        #self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
         self.image = self.death_sprite.get_sprite()
         return self.rect.y, self.rect.x
 
