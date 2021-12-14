@@ -30,8 +30,7 @@ class Game:
                           lambda: self.end_game())
         pause.show()
         self.background_image = pause.background_image
-        game_back = pygame.image.load(self.background_image).convert()
-        self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
+        self.change_background()
 
     def start_game(self):
         pygame.init()
@@ -69,16 +68,9 @@ class Game:
         background_music()
         MainMenu(screen, menu_background, lambda: start_game()).show()
 
-    def change_background(self, rep):
-        files = glob.glob(rep + sep + '*')
-        pos = files.index(self.background_image)
-        image = files[(pos+1) % len(files)]
-        while not image.lower().endswith(('.png', '.jpg')):
-            pos = (pos + 1) % len(files)
-            image = files[(pos + 1) % len(files)]
-        self.background_image = files[(pos + 1) % len(files)]
-
-        pygame.time.delay(100)
+    def change_background(self):
+        game_back = pygame.image.load(self.background_image).convert()
+        self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
 
 
 def start_game():
