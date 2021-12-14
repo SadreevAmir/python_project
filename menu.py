@@ -1,5 +1,5 @@
 import glob
-
+from music2 import *
 import pygame
 from constants import *
 import os
@@ -40,6 +40,7 @@ class Button:
 
 class Menu:
     def __init__(self, screen, background_image):
+        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.screen = screen
         self.background_image = background_image
         background = pygame.image.load(self.background_image).convert()
@@ -50,10 +51,10 @@ class Menu:
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         num = len(self.buttons)
-        pos = (num-0.5)/2
+        pos = 1/2 - num/25
         for button in self.buttons:
-            button.draw(self.screen.get_width()/2, self.screen.get_height()*(pos/num))
-            pos += num/9
+            button.draw(self.screen.get_width()/2, self.screen.get_height()*pos)
+            pos += 1/9
 
     def press(self):
         for button in self.buttons:
@@ -67,17 +68,19 @@ class Menu:
 
         while self.show_flag:
             clock.tick(30)
-            self.screen.fill(WHITE)
+            # self.screen.fill(WHITE)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    if type(self) == MainMenu:
+                        quit()
                     self.show_flag = False
 
             self.draw()
             self.press()
             pygame.display.update()
 
-    def change_background(self):
-        files = glob.glob('menu_back' + sep + '*')
+    def change_background(self, rep):
+        files = glob.glob(rep + sep + '*')
         pos = files.index(self.background_image)
         image = files[(pos+1) % len(files)]
         while not image.lower().endswith(('.png', '.jpg')):
@@ -106,9 +109,56 @@ class SettingsMenu(Menu):
         self.back_button = Button(self.screen, 'back', YELLOW, PURPLE,
                                   lambda: MainMenu(self.screen, self.background_image, lambda: start_function()).show())
         self.change_background_button = Button(self.screen, 'change background', YELLOW, BLUE,
-                                               lambda: self.change_background(),
+                                               lambda: self.change_background('menu_back'),
                                                lambda: SettingsMenu(self.screen, self.background_image,
                                                                     lambda: start_function()).show())
+        mus_flag = 'off'
+        effects_flag = 'off'
+        if pygame.mixer.Channel(0).get_volume():
+            mus_flag = 'on'
+        if pygame.mixer.Channel(1).get_volume():
+            effects_flag = 'on'
 
-        self.buttons = [self.back_button, self.change_background_button]
+        self.music_button = Button(self.screen, 'music: ' + mus_flag, YELLOW, PURPLE, lambda: switch_music(),
+                                   lambda: SettingsMenu(self.screen, self.background_image,
+                                                        lambda: start_function()).show())
+        self.sound_effects_button = Button(self.screen, 'sound effects: ' + effects_flag, YELLOW, PURPLE,
+                                           lambda: switch_sound_effects(),
+                                           lambda: SettingsMenu(self.screen,
+                                                                self.background_image, lambda: start_function()).show())
+        self.buttons = [self.back_button, self.change_background_button, self.music_button, self.sound_effects_button]
 
+
+class PauseMenu(Menu):
+    def __init__(self, screen, background_image, start_function=lambda: None, quit_function=lambda: None):
+        super(PauseMenu, self).__init__(screen, background_image)
+        self.background_image = background_image
+
+        self.pause = True
+        self.continue_button = Button(self.screen, 'continue', YELLOW, PURPLE)
+
+        self.quit_button = Button(self.screen, 'quit', YELLOW, RED,
+                                  lambda: quit_function())
+
+        mus_flag = 'off'
+        effects_flag = 'off'
+        if pygame.mixer.Channel(0).get_volume():
+            mus_flag = 'on'
+        if pygame.mixer.Channel(1).get_volume():
+            effects_flag = 'on'
+
+        self.music_button = Button(self.screen, 'music: ' + mus_flag, YELLOW, PURPLE, lambda: switch_music(),
+                                   lambda: PauseMenu(self.screen, self.background_image,
+                                                     lambda: start_function(), lambda: quit_function()).show())
+        self.sound_effects_button = Button(self.screen, 'sound effects: ' + effects_flag, YELLOW, PURPLE,
+                                           lambda: switch_sound_effects(),
+                                           lambda: PauseMenu(self.screen, self.background_image,
+                                                             lambda: start_function(), lambda: quit_function()).show())
+        self.change_background_button = Button(self.screen, 'change background', YELLOW, BLUE,
+                                               lambda: self.change_background('game_back'),
+                                               lambda: PauseMenu(self.screen, self.background_image,
+                                                                 lambda: start_function(),
+                                                                 lambda: quit_function()).show())
+
+        self.buttons = [self.continue_button, self.music_button, self.sound_effects_button,
+                        self.change_background_button, self.quit_button]

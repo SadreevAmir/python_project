@@ -31,7 +31,7 @@ PLATFORMS_COLOR = DARK_GREEN
 
 
 FONT = 'Current-Regular.ttf'
-SIZE = 54
+SIZE = 64
 PAUSE_FONT_SIZE = min(WIDTH//30, HEIGHT//19)
 menu_background = 'menu_back' + sep + 'menu_back1.png'
 game_background = 'game_back' + sep + 'game_back1.png'
