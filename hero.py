@@ -37,7 +37,7 @@ class Hero(pygame.sprite.Sprite):
         self.power = 4
         self.health_bar = Sprites('S_health_bars.png', 20000, 1, True)
         self.health_bar_rect = self.health_bar.sprite.get_rect()
-        self.health_bar.currentFrame = 4
+        self.health_bar.currentFrame = 9
         self.health_bar.get_sprite()
         self.lives = self.health_bar.currentFrame
         self.death = False
@@ -71,6 +71,8 @@ class Hero(pygame.sprite.Sprite):
                 self.power_bar.currentFrame -= 2
         else:
             self.death = True
+            self.lives = 0
+            characters.remove(self)
 
     def hitcheck(self, characters):
         for obj in characters:
@@ -91,9 +93,6 @@ class Hero(pygame.sprite.Sprite):
         all_sprites.add(Bullet(self, self.rect.centerx, self.rect.centery))
         fireball_music()
         self.shotting = False
-
-    def died(self):
-        ...
 
     def animate(self):
         if self.power_bar.currentFrame < self.power_bar.numbers_image - 1:
@@ -143,6 +142,15 @@ class Hero(pygame.sprite.Sprite):
 
     def collision_x(self, platforms):
         for p in platforms:
+            if pygame.sprite.collide_rect(self, p):
+
+                if self.Vx > 0:
+                    self.rect.right = p.rect.left
+
+                if self.Vx < 0:
+                    self.rect.left = p.rect.right
+
+        for p in characters:
             if pygame.sprite.collide_rect(self, p) and not (self is p):
 
                 if self.Vx > 0:
@@ -153,6 +161,17 @@ class Hero(pygame.sprite.Sprite):
 
     def collision_y(self, platforms):
         for p in platforms:
+            if pygame.sprite.collide_rect(self, p):
+                if self.Vy > 0:
+                    self.rect.bottom = p.rect.top
+                    self.onGround = True
+                    self.Vy = 0
+
+                if self.Vy < 0:
+                    self.rect.top = p.rect.bottom
+                    self.Vy = 0
+
+        for p in characters:
             if pygame.sprite.collide_rect(self, p) and not (self is p):
                 if self.Vy > 0:
                     self.rect.bottom = p.rect.top
