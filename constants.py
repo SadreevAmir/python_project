@@ -4,7 +4,7 @@ sep = os.path.sep
 
 NUMBER_OF_HORIZONTAL_BLOCKS = 120
 NUMBER_OF_VERTICAL_BLOCKS = 70
-NUMBER_OF_OBSTACLES = 80
+NUMBER_OF_OBSTACLES = 75
 OBSTACLES_LENGTH_MAXIMUM = 150 
 PLATFORMS_LIVES = 10
 
@@ -15,8 +15,8 @@ HERO_LIVES = 3
 WIDTH = NUMBER_OF_HORIZONTAL_BLOCKS*BLOCK_SIZE
 HEIGHT = NUMBER_OF_VERTICAL_BLOCKS*BLOCK_SIZE
 
-HERO_X = 3/2*HERO_SiZE_X
-HERO_Y = 3/2*HERO_SIZE_Y
+HERO_X = 2*HERO_SiZE_X
+HERO_Y = 2*HERO_SIZE_Y
 
 BLACK = [0, 0, 0]
 WHITE = [250, 250, 250]
@@ -63,15 +63,14 @@ d_key_rus = 1074
 e_key_rus = 1091
 q_key_rus = 1081
 comma_key_rus = 1073
+slash_rus = 46
 
 MOVE_SPEED = 5
 JUMP_POWER = 9
 GRAVITY = 0.35  # Сила, которая будет тянуть нас вниз
 
 characters = []
-num_field = []
 platforms = []
-
 all_sprites = pygame.sprite.Group()
 
 FPS = 60

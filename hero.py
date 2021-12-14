@@ -223,7 +223,7 @@ class Hero1(Hero):
                 self.jump = True
             elif event.key == pygame.K_e or event.key == e_key_rus:
                 self.shotting = True
-            elif event.key == pygame.K_q or event.key == q_key_rus or event.key == K_SPACE:
+            elif event.key == pygame.K_q or event.key == q_key_rus:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == a_key_rus:
@@ -266,7 +266,7 @@ class Hero2(Hero):
                 self.right, self.FACING = True, False
             elif event.key == pygame.K_UP:
                 self.jump = True
-            elif event.key == pygame.K_SLASH:
+            elif event.key == pygame.K_SLASH or event.key == slash_rus:
                 self.milli_attack = True
             elif event.key == pygame.K_COMMA or event.key == comma_key_rus:
                 self.shotting = True
