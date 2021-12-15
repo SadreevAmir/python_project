@@ -1,10 +1,8 @@
 import pygame
-import pathlib
 
 
 def background_music():
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('music/mrplastic-jump-11138.wav'), -1)
-    pygame.mixer.Channel(0).set_volume(0.5)
 
 
 def fireball_music():
