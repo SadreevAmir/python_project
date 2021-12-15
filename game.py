@@ -39,6 +39,7 @@ class Game:
         """
         :param background: ссылка на изображение фона игры
         """
+
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.hero_sprites = all_sprites
         self.hero_1 = Hero1(HERO_X, HERO_Y)
@@ -112,6 +113,7 @@ class Game:
 
         :return: None
         """
+
         all_sprites.empty()
         self.hero_sprites.empty()
         platforms.clear()
@@ -124,6 +126,7 @@ class Game:
 
         :return: None
         """
+
         all_sprites.empty()
         self.hero_sprites.empty()
         platforms.clear()
@@ -137,6 +140,7 @@ class Game:
 
         :return: None
         """
+
         if self.finish_text != '':
             font = pygame.font.Font(FONT, SIZE)
             text = font.render(self.finish_text, True, VIOLET)
@@ -152,6 +156,7 @@ class Game:
 
         :return: None
         """
+
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
 
@@ -162,5 +167,6 @@ def start_game(background: str):
     :param background: ссылка на изображение фона игры
     :return: None
     """
+
     game = Game(background)
     game.start_game()
