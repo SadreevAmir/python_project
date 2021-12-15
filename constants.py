@@ -27,12 +27,11 @@ DARK_GREEN = [10, 30, 20]
 BROWN = [70, 20, 15]
 PURPLE = [130, 25, 50]
 YELLOW = [220, 170, 80]
+VIOLET = [120, 25, 120]
 PLATFORMS_COLOR = DARK_GREEN
 
-
 FONT = 'Current-Regular.ttf'
-SIZE = 64
-PAUSE_FONT_SIZE = min(WIDTH//30, HEIGHT//19)
+SIZE = min(WIDTH//20, HEIGHT//10)
 menu_background = 'menu_back' + sep + 'menu_back1.png'
 game_background = 'game_back' + sep + 'game_back1.png'
 

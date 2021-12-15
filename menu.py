@@ -1,9 +1,6 @@
 import glob
-from music2 import *
-import pygame
 from constants import *
-import os
-sep = os.path.sep
+from music2 import switch_music, switch_sound_effects
 
 
 class Button:
@@ -40,7 +37,6 @@ class Button:
 
 class Menu:
     def __init__(self, screen, background_image):
-        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.screen = screen
         self.background_image = background_image
         background = pygame.image.load(self.background_image).convert()
@@ -68,7 +64,6 @@ class Menu:
 
         while self.show_flag:
             clock.tick(30)
-            # self.screen.fill(WHITE)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     if type(self) == MainMenu:
@@ -130,14 +125,16 @@ class SettingsMenu(Menu):
 
 
 class PauseMenu(Menu):
-    def __init__(self, screen, background_image, start_function=lambda: None, quit_function=lambda: None):
+    def __init__(self, screen, background_image, start_function=lambda: None, quit_function=lambda: None,
+                 restart_function=lambda: None):
         super(PauseMenu, self).__init__(screen, background_image)
         self.background_image = background_image
 
-        self.pause = True
-        self.continue_button = Button(self.screen, 'continue', YELLOW, PURPLE)
+        self.resume_button = Button(self.screen, 'resume', YELLOW, PURPLE)
 
-        self.quit_button = Button(self.screen, 'quit', YELLOW, RED,
+        self.restart_button = Button(self.screen, 'restart', YELLOW, RED,
+                                     lambda: restart_function())
+        self.quit_button = Button(self.screen, 'menu', YELLOW, RED,
                                   lambda: quit_function())
 
         mus_flag = 'off'
@@ -160,5 +157,24 @@ class PauseMenu(Menu):
                                                                  lambda: start_function(),
                                                                  lambda: quit_function()).show())
 
-        self.buttons = [self.continue_button, self.music_button, self.sound_effects_button,
-                        self.change_background_button, self.quit_button]
+        self.buttons = [self.resume_button, self.restart_button, self.change_background_button, self.music_button,
+                        self.sound_effects_button, self.quit_button]
+
+
+class FinishMenu(Menu):
+    def __init__(self, screen, background_image, start_function=lambda: None, quit_function=lambda: None, result=None):
+        super(FinishMenu, self).__init__(screen, background_image)
+
+        self.background_image = background_image
+
+        self.restart_button = Button(self.screen, 'restart', YELLOW, PURPLE,
+                                     lambda: start_function())
+
+        self.menu_button = Button(self.screen, 'menu', YELLOW, RED,
+                                  lambda: quit_function())
+
+        self.quit_button = Button(self.screen, 'quit', YELLOW, RED)
+        self.buttons = [self.restart_button, self.menu_button, self.quit_button]
+        if result != '':
+            self.empty_button = Button(self.screen, '', YELLOW, PURPLE)
+            self.buttons.insert(0, self.empty_button)
