@@ -3,7 +3,7 @@ from hero import Hero1, Hero2
 from field import create_field
 from platforms import create_platforms
 from menu import MainMenu, PauseMenu, FinishMenu
-from music2 import background_music
+from music import background_music
 
 
 class Game:
@@ -75,7 +75,7 @@ class Game:
                 else:
                     self.hero_1.event_checking_hero(event)
                     self.hero_2.event_checking_hero(event)
-            self.hero_sprites.update(platforms, characters, self.screen)
+            self.hero_sprites.update(platforms, self.screen)
             for p in platforms:
                 p.update(self.screen)
             key = pygame.key.get_pressed()

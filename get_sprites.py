@@ -1,9 +1,29 @@
-import pygame
 from constants import *
 
 
 class Sprites:
+    """
+    Класс Sprites используется для обслуживания анимации чего-либо.
+
+    Note:
+        Описание спрайта должно содержаться в Monsta_notes
+        (сколько картинок и сколько пикселей каждая через пробел, а строчкой выше название файла)
+
+    Attributes:
+        image - общий спрайт(все изображения на одном)
+        sprite - картинка на данный момент
+        остальные пораметры обслуживают анимацию(задержка прокрута, общее количество изображений,
+        номер текущего, размер отдельно изображения)
+    """
     def __init__(self, name_file, delay=50, t=1, real_size=False, directory='sprites/'):
+        """
+        Конструктор класса
+        :param name_file: имя файла
+        :param delay: задержка прокрута
+        :param t: масштаб
+        :param real_size: нужно ли оставить реальный размер или использовать константный размер
+        :param directory: директория(по-умолчанию все в папке sprites
+        """
         self.filename = directory + name_file
         self.image = pygame.image.load(self.filename)
         self.numbers_image = 0
@@ -11,19 +31,24 @@ class Sprites:
         self.size_y = 0
         self.currentFrame = -1
         self.delay = delay
-        #self.delay_counter = 1
         self.last_update = 0
         self.data_search(name_file, real_size)
         self.size_x *= t
         self.size_y *= t
         self.image = pygame.transform.scale(self.image, (self.size_x * self.numbers_image, self.size_y))
-        self.get_sprite()
+        self.sprite = self.get_sprite()
 
     def data_search(self, search_object, real_size, search_location='sprites/Monsta_notes.txt'):
+        """
+        Поиск данных в Monsta_notes
+        :param search_object: Какой файл ищем
+        :param real_size: нужно ли подтянуть реальный масштаб
+        :param search_location: место где ищем файл с описанием
+        """
         with open(search_location, 'r') as f:
             for line in f:
-                str = line[:-1]
-                if str == search_object:
+                string = line[:-1]
+                if string == search_object:
                     break
             line = f.readline()[:-1]
             data = [int(s) for s in line.split() if s.isdigit()]
@@ -36,6 +61,11 @@ class Sprites:
                 self.size_y = HERO_SIZE_Y
 
     def get_sprite(self, mirroring=False):
+        """
+        Получение картинки
+        :param mirroring: нужно ли отзеркалить
+        :return: картинка
+        """
         self.animation()
         self.sprite = pygame.Surface((self.size_x, self.size_y), pygame.SRCALPHA)
         self.sprite.blit(self.image, (-self.size_x * self.currentFrame, 0))
@@ -43,37 +73,10 @@ class Sprites:
         return self.sprite
 
     def animation(self):
+        """
+        Прокрут анимации с задержкой(смена номера текущего изображения)
+        """
         now = pygame.time.get_ticks()
         if now - self.last_update > self.delay:
             self.currentFrame = (self.currentFrame + 1) % self.numbers_image
             self.last_update = now
-        '''if self.delay_counter == 3:
-            self.currentFrame = (self.currentFrame + 1) % self.numbers_image
-            self.delay_counter = 0
-        else:
-            self.delay_counter += 1'''
-
-'''
-pygame.init()
-
-FPS = 30
-screen = pygame.display.set_mode((600, 600))
-screen.fill([55, 255, 255])
-
-obj = Sprites('s_plyr_run_strip8.png', screen)
-
-#obj.get_sprite(numbers)
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-
-while not finished:
-    clock.tick(FPS)
-    screen.fill([55, 255, 255])
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-    obj.animation(100, 0, True)
-    pygame.display.update()
-
-pygame.quit()'''
