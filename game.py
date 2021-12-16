@@ -85,7 +85,7 @@ class Game:
             if len(characters) < 2:
                 if len(characters) == 0:
                     self.finish_text = 'draw'
-                elif self.hero_1 not in characters:
+                elif self.hero_2 not in characters:
                     self.finish_text = 'winner player 1'
                 else:
                     self.finish_text = 'winner player 2'
