@@ -1,9 +1,4 @@
-import pygame
 from pygame.constants import K_SPACE, MOUSEBUTTONDOWN
-
-from get_sprites import Sprites
-from field import *
-from constants import *
 from bullet import *
 from music2 import *
 
@@ -42,12 +37,12 @@ class Hero(pygame.sprite.Sprite):
         self.lives = self.health_bar.currentFrame
         self.death = False
 
-    def update(self, platforms, characters, screen):
+    def update(self, platform, screen):
         if not self.death:
             self.event_handling()
             self.power = self.power_bar.currentFrame
             # print(self.health_bar.currentFrame)
-            self.hitcheck(characters)
+            self.hitcheck()
             self.faze_checking()
             self.health_bar.currentFrame = self.lives
             y, x = self.animate()
@@ -55,7 +50,7 @@ class Hero(pygame.sprite.Sprite):
         else:
             self.onGround = False
             y, x = self.death_animate()
-        self.movement(platforms)
+        self.movement(platform)
         # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
         screen.blit(self.image, (x, y))
         screen.blit(self.health_bar.sprite, self.health_bar_rect.topleft)
@@ -75,7 +70,7 @@ class Hero(pygame.sprite.Sprite):
             self.lives = 0
             characters.remove(self)
 
-    def hitcheck(self, characters):
+    def hitcheck(self):
         for obj in characters:
             if obj.attack and not (self is obj):
                 if self.rect.colliderect(obj.attack_rect):
@@ -123,7 +118,7 @@ class Hero(pygame.sprite.Sprite):
 
     def death_animate(self):
         self.health_bar_rect.midbottom = self.rect.midtop
-        #self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
+        # self.power_bar_rect.bottomleft = self.health_bar_rect.topleft
         self.image = self.death_sprite.get_sprite()
         return self.rect.y, self.rect.x
 
@@ -141,8 +136,8 @@ class Hero(pygame.sprite.Sprite):
                 self.onGround = False
         self.onGround = False
 
-    def collision_x(self, platforms):
-        for p in platforms:
+    def collision_x(self, platform):
+        for p in platform:
             if pygame.sprite.collide_rect(self, p):
 
                 if self.Vx > 0:
@@ -161,8 +156,8 @@ class Hero(pygame.sprite.Sprite):
                     if self.Vx < 0:
                         self.rect.left = p.rect.right
 
-    def collision_y(self, platforms):
-        for p in platforms:
+    def collision_y(self, platform):
+        for p in platform:
             if pygame.sprite.collide_rect(self, p):
                 if self.Vy > 0:
                     self.rect.bottom = p.rect.top
@@ -185,14 +180,14 @@ class Hero(pygame.sprite.Sprite):
                         self.rect.top = p.rect.bottom
                         self.Vy = 0
 
-    def movement(self, platforms):
+    def movement(self, platform):
         self.Vx += self.kick_speed
         self.rect.x += self.Vx
-        self.collision_x(platforms)
+        self.collision_x(platform)
         if not self.onGround:
             self.Vy += GRAVITY
             self.rect.y += self.Vy
-            self.collision_y(platforms)
+            self.collision_y(platform)
 
     def reset(self):
         self.Vx = 0

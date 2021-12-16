@@ -49,7 +49,7 @@ class Game:
                 else:
                     self.hero_1.event_checking_hero(event)
                     self.hero_2.event_checking_hero(event)
-            self.hero_sprites.update(platforms, characters, self.screen)
+            self.hero_sprites.update(platforms, self.screen)
             for p in platforms:
                 p.update(self.screen)
             key = pygame.key.get_pressed()

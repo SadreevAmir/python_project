@@ -1,4 +1,3 @@
-import pygame
 from constants import *
 
 
@@ -11,19 +10,18 @@ class Sprites:
         self.size_y = 0
         self.currentFrame = -1
         self.delay = delay
-        #self.delay_counter = 1
         self.last_update = 0
         self.data_search(name_file, real_size)
         self.size_x *= t
         self.size_y *= t
         self.image = pygame.transform.scale(self.image, (self.size_x * self.numbers_image, self.size_y))
-        self.get_sprite()
+        self.sprite = self.get_sprite()
 
     def data_search(self, search_object, real_size, search_location='sprites/Monsta_notes.txt'):
         with open(search_location, 'r') as f:
             for line in f:
-                str = line[:-1]
-                if str == search_object:
+                string = line[:-1]
+                if string == search_object:
                     break
             line = f.readline()[:-1]
             data = [int(s) for s in line.split() if s.isdigit()]
@@ -47,33 +45,3 @@ class Sprites:
         if now - self.last_update > self.delay:
             self.currentFrame = (self.currentFrame + 1) % self.numbers_image
             self.last_update = now
-        '''if self.delay_counter == 3:
-            self.currentFrame = (self.currentFrame + 1) % self.numbers_image
-            self.delay_counter = 0
-        else:
-            self.delay_counter += 1'''
-
-'''
-pygame.init()
-
-FPS = 30
-screen = pygame.display.set_mode((600, 600))
-screen.fill([55, 255, 255])
-
-obj = Sprites('s_plyr_run_strip8.png', screen)
-
-#obj.get_sprite(numbers)
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-
-while not finished:
-    clock.tick(FPS)
-    screen.fill([55, 255, 255])
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-    obj.animation(100, 0, True)
-    pygame.display.update()
-
-pygame.quit()'''

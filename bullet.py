@@ -1,5 +1,3 @@
-import pygame
-from constants import *
 from get_sprites import *
 
 
@@ -18,18 +16,17 @@ class Bullet(pygame.sprite.Sprite):
         else:
             self.speedy = 10
 
-    def update(self, platforms, characters, screen):
+    def update(self, platform, screen):
         self.rect.x += self.speedy
         screen.blit(self.image, self.rect.topleft)
-        self.collision(platforms, characters)
-        # убить, если он заходит за верхнюю часть экрана
+        self.collision(platform)
 
-    def collision(self, platforms, characters):
-        for p in platforms:
+    def collision(self, platform):
+        for p in platform:
             if self.rect.colliderect(p) and not (self.kind is p):
                 p.lives -= 1
                 if p.lives == 0:
-                    platforms.remove(p)
+                    platform.remove(p)
                 self.kill()
         for kind in characters:
             if self.rect.colliderect(kind) and not (kind is self.kind):
