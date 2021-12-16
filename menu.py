@@ -1,6 +1,6 @@
 import glob
 from constants import *
-from music2 import switch_music, switch_sound_effects
+from music import switch_music, switch_sound_effects
 
 
 class Button:
