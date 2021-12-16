@@ -65,7 +65,6 @@ class NumField:
             if change:
                 b = b / 2
                 changes += 1
-                print(changes)
                 change = False
         if changes == 5:
             a = 0
