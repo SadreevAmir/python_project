@@ -271,7 +271,7 @@ class Hero2(Hero):
                 self.jump = True
             elif event.key == pygame.K_SLASH:
                 self.milli_attack = True
-            elif event.key == pygame.K_PAGEDOWN or event.key == comma_key_rus:
+            elif event.key == pygame.K_COMMA or event.key == comma_key_rus:
                 self.shotting = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:

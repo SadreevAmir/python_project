@@ -4,7 +4,7 @@ sep = os.path.sep
 
 NUMBER_OF_HORIZONTAL_BLOCKS = 120
 NUMBER_OF_VERTICAL_BLOCKS = 70
-NUMBER_OF_OBSTACLES = 75
+NUMBER_OF_OBSTACLES = 80
 OBSTACLES_LENGTH_MAXIMUM = 150 
 PLATFORMS_LIVES = 10
 
@@ -15,8 +15,8 @@ HERO_LIVES = 3
 WIDTH = NUMBER_OF_HORIZONTAL_BLOCKS*BLOCK_SIZE
 HEIGHT = NUMBER_OF_VERTICAL_BLOCKS*BLOCK_SIZE
 
-HERO_X = 2*HERO_SiZE_X
-HERO_Y = 2*HERO_SIZE_Y
+HERO_X = 3/2*HERO_SiZE_X
+HERO_Y = 3/2*HERO_SIZE_Y
 
 BLACK = [0, 0, 0]
 WHITE = [250, 250, 250]
@@ -31,7 +31,7 @@ PLATFORMS_COLOR = DARK_GREEN
 
 
 FONT = 'Current-Regular.ttf'
-SIZE = 54
+SIZE = 64
 PAUSE_FONT_SIZE = min(WIDTH//30, HEIGHT//19)
 menu_background = 'menu_back' + sep + 'menu_back1.png'
 game_background = 'game_back' + sep + 'game_back1.png'
@@ -70,6 +70,7 @@ GRAVITY = 0.35  # Сила, которая будет тянуть нас вни
 
 characters = []
 num_field = []
+platforms = []
 
 all_sprites = pygame.sprite.Group()
 

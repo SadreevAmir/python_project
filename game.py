@@ -4,6 +4,7 @@ from field import *
 from constants import *
 from hero import *
 from platforms import *
+from menu import *
 import os
 sep = os.path.sep
 
@@ -19,64 +20,32 @@ class Game:
         self.background_image = game_background
         game_back = pygame.image.load(self.background_image).convert()
         self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
-        num_field = create_field([])
-        print(num_field)
+        num_field = create_field()
         create_platforms(num_field)
         self.hero_sprites.add(self.hero_1, self.hero_2)
 
     def pause(self):
-        clock = pygame.time.Clock()
-        font = pygame.font.Font(FONT, PAUSE_FONT_SIZE)
-        text1 = font.render('paused', True, RED)
-        text2 = font.render('tap or press enter to continue', True, RED)
-        text3 = font.render('press backspace to quit', True, RED)
-        text4 = font.render('press shift to change background', True, RED)
-        paused = True
-        while paused:
-            clock.tick(FPS)
-            self.screen.blit(self.game_back, (0, 0))
-            # self.hero_sprites.update(platforms, self.screen)
-            self.screen.blit(text1, (WIDTH/2 - text1.get_width()/2, HEIGHT/4))
-            self.screen.blit(text2, (WIDTH/2 - text2.get_width()/2, HEIGHT*5/12))
-            self.screen.blit(text4, (WIDTH/2 - text4.get_width()/2, HEIGHT*7/12))
-            self.screen.blit(text3, (WIDTH/2 - text3.get_width()/2, HEIGHT*3/4))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    paused = False
-                    pygame.quit()
-                    quit()
-                if pygame.mouse.get_pressed()[0] == 1:
-                    paused = False
-            key = pygame.key.get_pressed()
-            if key[pygame.K_RETURN]:
-                paused = False
-            elif key[pygame.K_BACKSPACE]:
-                pygame.quit()
-                quit()
-            elif key[pygame.K_RSHIFT] or key[pygame.K_LSHIFT]:
-                self.change_background()
-                game_back = pygame.image.load(self.background_image).convert()
-                self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
-
-            pygame.display.update()
+        pause = PauseMenu(self.screen, self.background_image, lambda: MainMenu(self.screen, menu_background,
+                                                                               lambda: Game().start_game()).show(),
+                          lambda: self.end_game())
+        pause.show()
+        self.background_image = pause.background_image
+        self.change_background()
 
     def start_game(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        # screen.fill([55, 255, 255])
 
         clock = pygame.time.Clock()
         finished = False
 
         while not finished:
             clock.tick(FPS)
-            # screen.fill([55, 255, 255])
             self.screen.blit(self.game_back, (0, 0))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     finished = True
-                    pygame.quit()
-                    quit()
+                    self.end_game()
                 else:
                     self.hero_1.event_checking_hero(event)
                     self.hero_2.event_checking_hero(event)
@@ -88,13 +57,23 @@ class Game:
                 self.pause()
             pygame.display.update()
 
-    def change_background(self):
-        files = glob.glob('game_back' + sep + '*')
-        pos = files.index(self.background_image)
-        image = files[(pos+1) % len(files)]
-        while not image.lower().endswith(('.png', '.jpg')):
-            pos = (pos + 1) % len(files)
-            image = files[(pos + 1) % len(files)]
-        self.background_image = files[(pos + 1) % len(files)]
+    def end_game(self):
+        all_sprites.empty()
+        self.hero_sprites.empty()
+        platforms.clear()
+        characters.clear()
+        pygame.quit()
+        pygame.init()
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        background_music()
+        MainMenu(screen, menu_background, lambda: start_game()).show()
 
-        pygame.time.delay(200)
+    def change_background(self):
+        game_back = pygame.image.load(self.background_image).convert()
+        self.game_back = pygame.transform.scale(game_back, self.screen.get_size())
+
+
+def start_game():
+    game = Game()
+    game.start_game()
+
