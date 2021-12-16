@@ -47,12 +47,13 @@ class Hero(pygame.sprite.Sprite):
             self.event_handling()
             self.power = self.power_bar.currentFrame
             # print(self.health_bar.currentFrame)
-            self.faze_checking()
             self.hitcheck(characters)
+            self.faze_checking()
             self.health_bar.currentFrame = self.lives
             y, x = self.animate()
             screen.blit(self.power_bar.sprite, self.power_bar_rect.topleft)
         else:
+            self.onGround = False
             y, x = self.death_animate()
         self.movement(platforms)
         # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
@@ -150,14 +151,15 @@ class Hero(pygame.sprite.Sprite):
                 if self.Vx < 0:
                     self.rect.left = p.rect.right
 
-        for p in characters:
-            if pygame.sprite.collide_rect(self, p) and not (self is p):
+        if self in characters:
+            for p in characters:
+                if pygame.sprite.collide_rect(self, p) and not (self is p):
 
-                if self.Vx > 0:
-                    self.rect.right = p.rect.left
+                    if self.Vx > 0:
+                        self.rect.right = p.rect.left
 
-                if self.Vx < 0:
-                    self.rect.left = p.rect.right
+                    if self.Vx < 0:
+                        self.rect.left = p.rect.right
 
     def collision_y(self, platforms):
         for p in platforms:
@@ -171,16 +173,17 @@ class Hero(pygame.sprite.Sprite):
                     self.rect.top = p.rect.bottom
                     self.Vy = 0
 
-        for p in characters:
-            if pygame.sprite.collide_rect(self, p) and not (self is p):
-                if self.Vy > 0:
-                    self.rect.bottom = p.rect.top
-                    self.onGround = True
-                    self.Vy = 0
+        if self in characters:
+            for p in characters:
+                if pygame.sprite.collide_rect(self, p) and not (self is p):
+                    if self.Vy > 0:
+                        self.rect.bottom = p.rect.top
+                        self.onGround = True
+                        self.Vy = 0
 
-                if self.Vy < 0:
-                    self.rect.top = p.rect.bottom
-                    self.Vy = 0
+                    if self.Vy < 0:
+                        self.rect.top = p.rect.bottom
+                        self.Vy = 0
 
     def movement(self, platforms):
         self.Vx += self.kick_speed
@@ -223,7 +226,7 @@ class Hero1(Hero):
                 self.jump = True
             elif event.key == pygame.K_e or event.key == e_key_rus:
                 self.shotting = True
-            elif event.key == pygame.K_q or event.key == q_key_rus or event.key == K_SPACE:
+            elif event.key == pygame.K_q or event.key == q_key_rus:
                 self.milli_attack = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == a_key_rus:
@@ -266,7 +269,7 @@ class Hero2(Hero):
                 self.right, self.FACING = True, False
             elif event.key == pygame.K_UP:
                 self.jump = True
-            elif event.key == pygame.K_SLASH:
+            elif event.key == pygame.K_SLASH or event.key == slash_rus:
                 self.milli_attack = True
             elif event.key == pygame.K_COMMA or event.key == comma_key_rus:
                 self.shotting = True
