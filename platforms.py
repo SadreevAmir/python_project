@@ -1,4 +1,5 @@
-from hero import *
+import pygame
+from constants import *
 
 
 class Platform(pygame.sprite.Sprite):
