@@ -47,7 +47,7 @@ stay_sprite2 = 's_purp_plyr_idle1_strip8.png'
 jump_sprite2 = 's_purp_plyr_jump_strip7.png'
 milli_attack_sprite2 = 's_purp_plyr_powUp_strip15.png'
 stun_sprite2 = 's_purp_plyr_pain2_strip7.png'
-death_sprite2 = 's_plyr_down_strip5.png'
+death_sprite2 = 's_purp_plyr_down_strip5.png'
 
 run_sprite3 = 'blue_run6.png'
 stay_sprite3 = 'blue_stay12.png'
