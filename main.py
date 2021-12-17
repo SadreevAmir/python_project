@@ -1,12 +1,11 @@
 
-from game import *
-from menu import *
+from game import background_music, start_game
+from music import starting_sound_settings
+from menu import MainMenu
+from constants import*
 
 pygame.init()
-pygame.mixer.Channel(0).set_volume(0.5)
-pygame.mixer.Channel(1).set_volume(1)
-pygame.mixer.Channel(2).set_volume(2)
-
+starting_sound_settings()
 background_music()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 MainMenu(screen, menu_background, lambda: start_game(game_background)).show()

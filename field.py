@@ -1,4 +1,5 @@
-from constants import *
+from constants import NUMBER_OF_HORIZONTAL_BLOCKS, NUMBER_OF_VERTICAL_BLOCKS, \
+    HERO_SiZE_X, PLATFORMS_LIVES, BLOCK_SIZE
 import random
 from perlin_noise import PerlinNoise
 

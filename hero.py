@@ -1,6 +1,8 @@
 from pygame.constants import K_SPACE, MOUSEBUTTONDOWN
-from bullet import *
-from music import *
+from bullet import Bullet
+from get_sprites import Sprites
+from constants import *
+from music import punch_music, fireball_music
 
 
 class Hero(pygame.sprite.Sprite):
@@ -31,7 +33,6 @@ class Hero(pygame.sprite.Sprite):
         """
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface(hero_size)
-        # self.hero_size = hero_size
         self.run_sprite = Sprites(run_sprite1)
         self.stay_sprite = Sprites(stay_sprite1)
         self.milli_attack_sprite = Sprites(milli_attack_sprite1, 40, 2)
@@ -46,7 +47,6 @@ class Hero(pygame.sprite.Sprite):
         self.Vx = 0
         self.Vy = 0
         self.kick_speed = 0
-        # self.running = False
         self.attack = False
         self.stun = False
         self.shooting = False
@@ -70,7 +70,6 @@ class Hero(pygame.sprite.Sprite):
         if not self.death:
             self.event_handling()
             self.power = self.power_bar.currentFrame
-            # print(self.health_bar.currentFrame)
             self.hitcheck()
             self.faze_checking()
             self.health_bar.currentFrame = self.lives
@@ -80,7 +79,6 @@ class Hero(pygame.sprite.Sprite):
             self.onGround = False
             y, x = self.death_animate()
         self.movement(platform)
-        # pygame.draw.rect(screen, [0, 0, 0], self.attack_rect)
         screen.blit(self.image, (x, y))
         screen.blit(self.health_bar.sprite, self.health_bar_rect.topleft)
         self.reset()
