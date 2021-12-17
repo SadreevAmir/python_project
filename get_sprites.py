@@ -1,4 +1,5 @@
-from constants import *
+import pygame
+from constants import HERO_SiZE_X, HERO_SIZE_Y
 
 
 class Sprites:

@@ -1,6 +1,7 @@
 
-from game import *
-from menu import *
+from game import background_music, start_game
+from menu import MainMenu
+from constants import*
 
 pygame.init()
 pygame.mixer.Channel(0).set_volume(0.5)

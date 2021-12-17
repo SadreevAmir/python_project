@@ -7,7 +7,7 @@ def background_music():
     :return: None
     """
 
-    pygame.mixer.Channel(0).play(pygame.mixer.Sound('music/mrplastic-jump-11138.wav'), -1)
+    pygame.mixer.Channel(0).play(pygame.mixer.Sound('music_files/mrplastic-jump-11138.wav'), -1)
 
 
 def fireball_music():
@@ -17,7 +17,7 @@ def fireball_music():
     """
 
     pygame.mixer.Channel(1).play(
-        pygame.mixer.Sound('music/bolshoy-vzryiv.wav'))
+        pygame.mixer.Sound('music_files/bolshoy-vzryiv.wav'))
 
 
 def punch_music():
@@ -26,7 +26,7 @@ def punch_music():
     :return: None
     """
 
-    pygame.mixer.Channel(2).play(pygame.mixer.Sound('music/zvuk-udara2.wav'))
+    pygame.mixer.Channel(2).play(pygame.mixer.Sound('music_files/zvuk-udara2.wav'))
 
 
 def switch_music():

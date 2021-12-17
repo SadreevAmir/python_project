@@ -1,4 +1,5 @@
-from get_sprites import *
+import pygame
+from constants import characters, HERO_SIZE_Y
 
 
 class Bullet(pygame.sprite.Sprite):
