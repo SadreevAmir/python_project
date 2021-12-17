@@ -53,3 +53,12 @@ def switch_sound_effects():
     else:
         pygame.mixer.Channel(1).set_volume(1)
         pygame.mixer.Channel(2).set_volume(2)
+
+
+def starting_sound_settings():
+    """
+    Задает начальные параметры громкости звука
+    """
+    pygame.mixer.Channel(0).set_volume(0.5)
+    pygame.mixer.Channel(1).set_volume(1)
+    pygame.mixer.Channel(2).set_volume(2)
